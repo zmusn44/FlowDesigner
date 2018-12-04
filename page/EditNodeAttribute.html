@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title>属性编辑</title>
 
-		<link rel="stylesheet" href="../layui/css/layui.css" />
+		<link rel="stylesheet" href="../plugings/layui/css/layui.css" />
 
 	</head>
 
@@ -29,37 +29,38 @@
 		</div>
 	</body>
 
-	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="../layui/layui.all.js"></script>
-	<script type="text/javascript" src="../util/StringUtils.js"></script>
-	<script type="text/javascript" src="../util/LayuiUtils.js"></script>
+	<script type="text/javascript" src="../js/component/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../plugings/layui/layui.all.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-layui.js"></script>
 	
 	<script>
-		var eleId;
+		let _base = parent.FLOW._base;
+		let eleId;
 		$(function() {
-			eleId = parent.getEleId();
-			$('#textId').val(parent.getGraph().node(getRemovePrefixId(eleId)).text);
+			eleId = parent.layuiUtil.tempId;
+			
+			$('#textId').val(_base.graph.node(parent.ZFSN.removeJQSel(eleId)).text);
 		});
 		
 		$("#confirmId").click(function() {
-			//更新图对象
-			parent.getGraph().node(getRemovePrefixId(eleId)).text = $("#textId").val();
+			// 更新图对象
+			_base.graph.node(parent.ZFSN.removeJQSel(eleId)).text = $("#textId").val();
 			
-			//更新节点属性
-			var text = $("#textId").val();
+			// 更新节点属性
+			let text = $("#textId").val();
 			if (text.length > 5) {
 				text = text.substring(0, 5) + '...';
 			}
-			parent.$(getJquerySelectorPrefix(eleId)).children(':first-child').text(text);
+			parent.$(parent.ZFSN.getJQSel(eleId)).children(':first-child').text(text);
 			
-			//关闭弹窗
-			closeLayerFrame();
+			// 关闭弹窗
+			layuiUtil.closeFrame();
 		});
 		
-		//点击取消
+		// 点击取消
 		$('#cancerId').click(function() {
-			//关闭弹窗
-			closeLayerFrame();
+			// 关闭弹窗
+			layuiUtil.closeFrame();
 		});
 	</script>
 	

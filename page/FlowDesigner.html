@@ -6,7 +6,7 @@
 		<title>流程绘制器</title>
 		
 		<link rel="stylesheet" href="../css/node.css" />
-		<link rel="stylesheet" href="../layui/css/layui.css" />
+		<link rel="stylesheet" href="../plugings/layui/css/layui.css" />
 		<link href="../plugings/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="../plugings/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="../css/index.css" />
@@ -55,48 +55,48 @@
 				<!-- logo -->
 				<div class="layui-logo" style="width: 380px; text-align: left; left: 50px;">
 					<img src="../images/logo.png" style="margin-right: 20px;" />
-					<span class="iconClass" style="font-size: 20px; padding-left: 10px; font-weight: bolder; border-left: 1px #cecece solid;">联 科 BPM 流 程 绘 制</span>
+					<span class="iconClass" style="font-size: 20px; padding-left: 10px; font-weight: bolder; border-left: 1px #cecece solid;">流 程 绘 制</span>
 				</div>
 				<!-- 右侧头部区域 -->
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item">
-						<a href="javascript: save();">
+						<a href="javascript: FLOW.save();">
 							<i class="fa fa-check fa-2x iconClass showItemTxt" aria-hidden="true" type="3"><span id="saveStatus" class="layui-badge-dot" style="display: none;"></span></i>
 							<span hidden="hidden">保存流程</span>
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript: save2Photo();" download="myFlow">
+						<a href="javascript: FLOW.save2Photo();" download="myFlow">
 							<i class="fa fa-file-image-o fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">保存为图片</span>
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript: undo();">
+						<a href="javascript: FLOW.undo();">
 							<i class="fa fa-reply fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">撤销</span>
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript: redo();">
+						<a href="javascript: FLOW.redo();">
 							<i class="fa fa-share fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">重做</span>
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript: clear();">
+						<a href="javascript: FLOW.clearCanvas();">
 							<i class="fa fa-refresh fa-2x fa-fw iconClass showItemTxt" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">重新绘制</span>
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a id="showGridId" href="javascript: showGrid();">
+						<a id="showGridId" href="javascript: FLOW.changeGrid();">
 							<i class="fa fa-eye fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">隐藏网格</span>
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript: setting();">
+						<a href="javascript: layuiUtil.setting();">
 							<i class="fa fa-cog fa-2x fa-fw iconClass showItemTxt" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">设置</span>
 						</a>
@@ -108,15 +108,15 @@
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="javascript: helpDoc();"><p>帮助文档</p></a>
+								<a href="javascript: layuiUtil.helpDoc();"><p>帮助文档</p></a>
 							</dd>
 							<dd>
-								<a href="javascript: shortcutKey();"><p>快捷键大全</p></a>
+								<a href="javascript: layuiUtil.shortcutKey();"><p>快捷键大全</p></a>
 							</dd>
 						</dl>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript: closeFrame();">
+						<a href="javascript: FLOW.exit();">
 							<i class="fa fa-sign-out fa-2x showItemTxt iconClass" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">退出</span>
 						</a>
@@ -253,28 +253,31 @@
 	</body>
 	
 	<!-- 注意Ready.js要放在最后面 -->
-	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="../js/jsplumb.min.js"></script>
-	<script type="text/javascript" src="../layui/layui.all.js"></script>
-	<script type="text/javascript" src="../js/web.contextmenu.js"></script>
-	<script type="text/javascript" src="../js/graphlib.min.js"></script>
-	<script type="text/javascript" src="../js/html2canvas.min.js"></script>
-	<script type="text/javascript" src="../js/canvg.js"></script>
+	<script type="text/javascript" src="../js/component/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../js/component/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/component/jsplumb.min.js"></script>
+	<script type="text/javascript" src="../plugings/layui/layui.all.js"></script>
+	<script type="text/javascript" src="../js/component/web.contextmenu.js"></script>
+	<script type="text/javascript" src="../js/component/graphlib.min.js"></script>
+	<script type="text/javascript" src="../js/component/html2canvas.min.js"></script>
+	<script type="text/javascript" src="../js/component/canvg.js"></script>
 	
-	<script type="text/javascript" src="../myjs/GlobalVar.js"></script>
-	<script type="text/javascript" src="../util/StringUtils.js"></script>
-	<script type="text/javascript" src="../util/GraphlibUtils.js"></script>
-	<script type="text/javascript" src="../util/LayuiUtils.js"></script>
-	<script type="text/javascript" src="../util/JsPlumbUtils.js"></script>
-	<script type="text/javascript" src="../myjs/MyLayui.js"></script>
-	<script type="text/javascript" src="../myjs/RightMenu.js"></script>
-	<script type="text/javascript" src="../myjs/MyFunction.js"></script>
-	<script type="text/javascript" src="../myjs/Ready.js"></script>
+	<script type="text/javascript" src="../config/config.js" ></script>
+	<script type="text/javascript" src="../js/main/RightMenu.js"></script>
+	<script type="text/javascript" src="../js/main/zfsn.js"></script>
+	<script type="text/javascript" src="../js/main/zfsn-flow.js" ></script>
+	<script type="text/javascript" src="../js/main/zfsn-flow-render.js" ></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-str.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-layui.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-plumb.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-graph.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-idpool.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-color.js"></script>
+	<script type="text/javascript" src="../load.js" ></script>
 
 	<script>
 		/**
-		 * 手风琴菜单效果
+		 * 菜单
 		 */
 		$.each($('dd[class=list_dd]'), function() {
 			$(this).prev().attr("id", "open");

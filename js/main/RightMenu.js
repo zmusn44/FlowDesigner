@@ -1,65 +1,64 @@
-//节点右击菜单
+// 节点右击菜单
 var nodeMenuJson = [
 	{
 		name: "节点属性",
 		id: "nodeAttr",
 		callback: function(tempId) {
-			editNodeAttribute(tempId);
+			layuiUtil.editNodeAttribute(tempId);
 		}
 	},
 	{
 		name: "复制节点",
 		id: "copyNode",
 		callback: function(tempId) {
-			copyNode(tempId);
+			FLOW.copyNode(tempId);
 		}
 	},
 	{
 		name: "删除节点",
 		id: "deleteNode",
 		callback: function(tempId) {
-			deleteNode(tempId);
+			FLOW.deleteNode(tempId);
 		}
 	},
 	{
 		name: "显示节点前继路径",
 		id: "connRouteFront",
 		callback: function(tempId) {
-			showConnectionRoute(tempId, 'front');
+			FLOW.showConnectionRoute(tempId, 'front');
 		}
 	},
 	{
 		name: "显示节点后续路径",
 		id: "connRouteBehind",
 		callback: function(tempId) {
-			showConnectionRoute(tempId, 'behind');
+			FLOW.showConnectionRoute(tempId, 'behind');
 		}
 	},
 	{
 		name: "节点样式",
 		id: "nodeStyle",
 		callback: function(tempId) {
-			console.log("设置节点样式：" + tempId);
-			setNodeStyle(tempId);
+			layuiUtil.setNodeStyle(tempId);
 		}
 	}
 ];
 
-//连接线右击菜单
+// 连接线右击菜单
 var connectionMenuJson = [
 	{
-		name: "路由属性",
+		name: "连线属性",
 		id: "connectionAttr",
 		callback: function(tempId) {
-			//编辑路由属性
-			connectionAttr(tempId);
+			// 编辑路由属性
+			layuiUtil.connectionAttr(tempId);
 		}
 	},
 	{
 		name: "删除连线",
 		id: "deleteConnection",
 		callback: function(tempId) {
-			deleteConnection(tempId);
+			FLOW.deleteConnection(tempId);
 		}
 	}
 ];
@@ -70,20 +69,20 @@ var laneMenuJson = [
 		name: "属性编辑",
 		id: "laneAttr",
 		callback: function(tempId) {
-			//编辑泳道属性
-			laneAttr(tempId)
+			// 编辑泳道属性
+			layuiUtil.laneAttr(tempId);
 		}
 	},
 	{
 		name: "删除泳道",
 		id: "deleteLane",
 		callback: function(tempId) {
-			deleteLane(tempId);
+			FLOW.deleteLane(tempId);
 		}
 	}
 ];
 
-//画布右击菜单
+// 画布右击菜单
 var canvasMenuJson = [
 	{
 		name: "流程图属性",
@@ -97,21 +96,21 @@ var canvasMenuJson = [
 		name: "粘贴",
 		id: "pasteNode",
 		callback: function(tempId) {
-			pasteNode();
+			FLOW.pasteNode();
 		}
 	},
 	{
 		name: "全选",
 		id: "selectAll",
 		callback: function(tempId) {
-			selectedAll();
+			FLOW.selectedAll();
 		}
 	},
 	{
 		name: "保存流程",
 		id: "saveFlowChart",
 		callback: function(tempId) {
-			save();
+			FLOW.save();
 		}
 	},
 	{
@@ -146,13 +145,13 @@ var canvasMenuJson = [
 		id: "leftAlign",
 		parent: "alignWay",
 		callback: function(tempId) {
-			var selectedNodeIdArr = alignWayCheck();
+			let selectedNodeIdArr = plumbUtil.alignWayCheck();
 			if (selectedNodeIdArr != null) {
-				leftAlign(selectedNodeIdArr);
+				plumbUtil.leftAlign(selectedNodeIdArr);
 				setTimeout(function(){
-					leftAlign(selectedNodeIdArr);
-					//更新所有图对象中保存的节点位置
-					updateAllGraphNode();
+					plumbUtil.leftAlign(selectedNodeIdArr);
+					// 更新所有图对象中保存的节点位置
+					graphUtil.updateAllNode();
 				}, CONFIG.alignParam.alignDuration + 100);
 			}
 		}
@@ -162,13 +161,13 @@ var canvasMenuJson = [
 		id: "verticalCenter",
 		parent: "alignWay",
 		callback: function(tempId) {
-			var selectedNodeIdArr = alignWayCheck();
+			let selectedNodeIdArr = plumbUtil.alignWayCheck();
 			if (selectedNodeIdArr != null) {
-				verticalCenter(selectedNodeIdArr);
+				plumbUtil.verticalCenter(selectedNodeIdArr);
 				setTimeout(function(){
-					verticalCenter(selectedNodeIdArr);
-					//更新所有图对象中保存的节点位置
-					updateAllGraphNode();
+					plumbUtil.verticalCenter(selectedNodeIdArr);
+					// 更新所有图对象中保存的节点位置
+					graphUtil.updateAllNode();
 				}, CONFIG.alignParam.alignDuration + 100);
 			}
 		}
@@ -178,13 +177,13 @@ var canvasMenuJson = [
 		id: "rightAlign",
 		parent: "alignWay",
 		callback: function(tempId) {
-			var selectedNodeIdArr = alignWayCheck();
+			var selectedNodeIdArr = plumbUtil.alignWayCheck();
 			if (selectedNodeIdArr != null) {
-				rightAlign(selectedNodeIdArr);
+				plumbUtil.rightAlign(selectedNodeIdArr);
 				setTimeout(function(){
-					rightAlign(selectedNodeIdArr);
-					//更新所有图对象中保存的节点位置
-					updateAllGraphNode();
+					plumbUtil.rightAlign(selectedNodeIdArr);
+					// 更新所有图对象中保存的节点位置
+					graphUtil.updateAllNode();
 				}, CONFIG.alignParam.alignDuration + 100);
 			}
 		}
@@ -194,13 +193,13 @@ var canvasMenuJson = [
 		id: "upAlign",
 		parent: "alignWay",
 		callback: function(tempId) {
-			var selectedNodeIdArr = alignWayCheck();
+			var selectedNodeIdArr = plumbUtil.alignWayCheck();
 			if (selectedNodeIdArr != null) {
-				upAlign(selectedNodeIdArr);
+				plumbUtil.upAlign(selectedNodeIdArr);
 				setTimeout(function(){
-					upAlign(selectedNodeIdArr);
-					//更新所有图对象中保存的节点位置
-					updateAllGraphNode();
+					plumbUtil.upAlign(selectedNodeIdArr);
+					// 更新所有图对象中保存的节点位置
+					graphUtil.updateAllNode();
 				}, CONFIG.alignParam.alignDuration + 100);
 			}
 		}
@@ -210,13 +209,13 @@ var canvasMenuJson = [
 		id: "levelAlign",
 		parent: "alignWay",
 		callback: function(tempId) {
-			var selectedNodeIdArr = alignWayCheck();
+			var selectedNodeIdArr = plumbUtil.alignWayCheck();
 			if (selectedNodeIdArr != null) {
-				levelAlign(selectedNodeIdArr);
+				plumbUtil.levelAlign(selectedNodeIdArr);
 				setTimeout(function(){
-					levelAlign(selectedNodeIdArr);
-					//更新所有图对象中保存的节点位置
-					updateAllGraphNode();
+					plumbUtil.levelAlign(selectedNodeIdArr);
+					// 更新所有图对象中保存的节点位置
+					graphUtil.updateAllNode();
 				}, CONFIG.alignParam.alignDuration + 100);
 			}
 		}
@@ -226,20 +225,20 @@ var canvasMenuJson = [
 		id: "downAlign",
 		parent: "alignWay",
 		callback: function(tempId) {
-			var selectedNodeIdArr = alignWayCheck();
+			var selectedNodeIdArr = plumbUtil.alignWayCheck();
 			if (selectedNodeIdArr != null) {
-				downAlign(selectedNodeIdArr);
+				plumbUtil.downAlign(selectedNodeIdArr);
 				setTimeout(function(){
-					downAlign(selectedNodeIdArr);
-					//更新所有图对象中保存的节点位置
-					updateAllGraphNode();
+					plumbUtil.downAlign(selectedNodeIdArr);
+					// 更新所有图对象中保存的节点位置
+					graphUtil.updateAllNode();
 				}, CONFIG.alignParam.alignDuration + 100);
 			}
 		}
 	}
 ];
 
-//查看流程图画布右击菜单
+// 查看流程图画布右击菜单
 var showFlowMenuJson = [
 	{
 		name: "背景切换",

@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title>设置</title>
 
-		<link rel="stylesheet" href="../layui/css/layui.css" />
+		<link rel="stylesheet" href="../plugings/layui/css/layui.css" />
 
 	</head>
 
@@ -95,25 +95,25 @@
 		</div>
 	</body>
 
-	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="../layui/layui.all.js"></script>
-	<script type="text/javascript" src="../util/StringUtils.js"></script>
-	<script type="text/javascript" src="../util/LayuiUtils.js"></script>
+	<script type="text/javascript" src="../js/component/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../plugings/layui/layui.all.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-layui.js"></script>
 	
 	<script>
-		var config;
-		var allAnchors = ["Bottom", "Right", "Top", "Left", "TopRight", "BottomRight", "BottomLeft", "TopLeft"];
+		let config;
+		let allAnchors = ["Bottom", "Right", "Top", "Left", "TopRight", "BottomRight", "BottomLeft", "TopLeft"];
 		$(function() {
-			config = parent.getConfig();
-			//初始化数据
+			config = parent.CONFIG;
+			
+			// 初始化数据
 			$('#movePXId').val(config.defaultConfig.smallMovePX);
 			$('#levelDistanceId').val(config.alignParam.levelDistance);
 			$('#verticalDistanceId').val(config.alignParam.verticalDistance);
 			$('#connectionTypeId').val(config.conn.connectionType);
 			
-			var sourceAnchors = config.anchors.sourceAnchors;
-			var targetAnchors = config.anchors.targetAnchors;
-			var sameAnchorsFlag = config.anchors.sameAnchorsFlag;
+			let sourceAnchors = config.anchors.sourceAnchors;
+			let targetAnchors = config.anchors.targetAnchors;
+			let sameAnchorsFlag = config.anchors.sameAnchorsFlag;
 			if (sameAnchorsFlag) {
 				$('#sameWithSource').prop('checked', 'checked');
 			} else {
@@ -141,7 +141,7 @@
 		}
 		
 		function getSourceArray() {
-			var res = [];
+			let res = [];
 			$.each($('#sourceAnchorsId').children('input'), function() {
 				if ($(this).prop('checked')) {
 					res.push($(this).attr('name'));
@@ -151,7 +151,7 @@
 		}
 		
 		function getTargetArray() {
-			var res = [];
+			let res = [];
 			$.each($('#targetAnchorsId').children('input'), function() {
 				if ($(this).prop('checked')) {
 					res.push($(this).attr('name'));
@@ -161,21 +161,21 @@
 		}
 		
 		function checkBoxCheckedByArray(arr, suffix) {
-			var i;
+			let i;
 			for (i = 0; i < arr.length; i++) {
 				$('#' + arr[i] + suffix).prop('checked', 'checked');
 			}
 		}
 		
 		function allNoCheckd() {
-			var i;
+			let i;
 			for (i = 0; i < allAnchors.length; i++) {
 				$('#' + allAnchors[i] + 'Target').prop('checked', '');
 			}
 		}
 		
 		function disabledCheckBoxByArray(flag) {
-			var i;
+			let i;
 			if (flag) {
 				for (i = 0; i < allAnchors.length; i++) {
 					$('#' + allAnchors[i] + 'Target').attr('disabled', 'disabled');
@@ -188,9 +188,9 @@
 		}
 		
 		$("#confirmId").click(function() {
-			//更新配置
-			var levelDistance = parseInt($('#levelDistanceId').val());
-			var verticalDistance = parseInt($('#verticalDistanceId').val());
+			// 更新配置
+			let levelDistance = parseInt($('#levelDistanceId').val());
+			let verticalDistance = parseInt($('#verticalDistanceId').val());
 			if (levelDistance < 30) {
 				levelDistance = 30;
 			} else if (levelDistance > 300) {
@@ -202,29 +202,37 @@
 				verticalDistance = 300;
 			}
 			
-			var sourceArr =  getSourceArray();
-			var targetArr = getTargetArray();
+			let sourceArr =  getSourceArray();
+			let targetArr = getTargetArray();
 			if (sourceArr.length <= 0 || targetArr <= 0) {
 				layer.msg('Source锚点和Target锚点都至少选择一个');
 				return;
 			}
+			
+			// 锚点
 			config.anchors.sourceAnchors = sourceArr;
 			config.anchors.targetAnchors = targetArr;
 			config.anchors.sameAnchorsFlag = $('#sameWithSource').prop('checked');
 			
+			// 微移幅度
 			config.defaultConfig.smallMovePX = parseInt($('#movePXId').val());
+			
+			// 对齐间距
 			config.alignParam.levelDistance = levelDistance;
 			config.alignParam.verticalDistance = verticalDistance;
+			
+			// 连线样式
+			parent.FLOW._base.plumb.Defaults.Connector[0] = $('#connectionTypeId').val();
 			config.conn.connectionType = $('#connectionTypeId').val();
 			
-			//关闭弹窗
-			closeLayerFrame();
+			// 关闭弹窗
+			layuiUtil.closeFrame();
 		});
 		
-		//点击取消
+		// 点击取消
 		$('#cancerId').click(function() {
-			//关闭弹窗
-			closeLayerFrame();
+			// 关闭弹窗
+			layuiUtil.closeFrame();
 		});
 	</script>
 	

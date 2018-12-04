@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title>泳道属性编辑</title>
 
-		<link rel="stylesheet" href="../layui/css/layui.css" />
+		<link rel="stylesheet" href="../plugings/layui/css/layui.css" />
 
 	</head>
 
@@ -29,51 +29,51 @@
 		</div>
 	</body>
 
-	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="../layui/layui.all.js"></script>
-	<script type="text/javascript" src="../util/StringUtils.js"></script>
-	<script type="text/javascript" src="../util/LayuiUtils.js"></script>
+	<script type="text/javascript" src="../js/component/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../plugings/layui/layui.all.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-layui.js"></script>
 	
 	<script>
-		var eleId;
-		var laneObj;
+		let _base = parent.FLOW._base;
+		let eleId;
+		let laneObj;
 		$(function() {
-			eleId = parent.getEleId();
-			var laneId = parent.$(eleId).parent().attr('id');
-			laneObj = parent.getLANEOBJS()[laneId];
+			eleId = parent.layuiUtil.tempId;
+			let laneId = parent.$(eleId).parent().attr('id');
+			laneObj = _base.laneObjs[laneId];
 			$('#textId').val(laneObj.text);
 		});
 		
 		$("#confirmId").click(function() {
-			var v = $('#textId').val().trim();
+			let v = $('#textId').val().trim();
 			
-			//当去掉前后空格后的值不为图对象中的值时，说明值有改动，此时才更新图对象以及节点UI的展示
+			// 当去掉前后空格后的值不为图对象中的值时，说明值有改动，此时才更新图对象以及节点UI的展示
 			if (v != laneObj.text) {
-				//更新图对象
+				// 更新泳道对象
 				laneObj.text = $('#textId').val();
 				
-				//更新节点
+				// 更新节点
 				if (laneObj.nodeType == 'broadwiseLane') {
-					var tempText = '', textArr = v.split('');
+					let tempText = '', textArr = v.split('');
 					for (i = 0; i < textArr.length; i++) {
 						tempText += '<span style="display: block;">' + textArr[i] + '</span>';
 					}
 					parent.$(eleId).html(tempText);
-					parent.$(eleId).css('line-height', parent.getLaneLineHeight(v, parent.$(eleId).css('height')));
+					parent.$(eleId).css('line-height', parent.ZFSN.getLaneLineHeight(v, parent.$(eleId).css('height')));
 				} else {
 					parent.$(eleId).html('<span>' + v+ '</span>');
 				}
 			}
 			
 			
-			//关闭弹窗
-			closeLayerFrame();
+			// 关闭弹窗
+			layuiUtil.closeFrame();
 		});
 		
-		//点击取消
+		// 点击取消
 		$('#cancerId').click(function() {
-			//关闭弹窗
-			closeLayerFrame();
+			// 关闭弹窗
+			layuiUtil.closeFrame();
 		});
 	</script>
 	
