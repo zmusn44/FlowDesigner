@@ -1,21 +1,29 @@
 // 渲染流程设计器
-FLOW.render = () => {
+FLOW.render = function() {
 	
-	// JsPlumb初始化
-	jsPlumb.ready(() => {
-		// 1、监听流程设计器
+	// 1、加载语言环境
+	ZFSN.loadJsonFromUrl('/FlowDesigner/json/lang/' + CONFIG.defaultConfig.language + '.json', 'GET', function(err, text) {
+		if (!err) {
+			let data = JSON.parse(text);
+			CONFIG.msg = data;
+		}
+	});
+	
+	// 2、JsPlumb初始化
+	jsPlumb.ready(function() {
+		// 2.1、监听流程设计器
 		FLOW.registerBaseEvent();
 		
-		// 2、实例化jsPlumb
+		// 2.2、实例化jsPlumb
 		plumbUtil.getInstance();
 		
-		// 3、选择初始工具：鼠标工具
+		// 2.3、选择初始工具：鼠标工具
 		FLOW.mouseTool();
 	});
 };
 
 // 注册流程设计器监听
-FLOW.registerBaseEvent = () => {
+FLOW.registerBaseEvent = function() {
 	
 	let _base = FLOW._base;
 	

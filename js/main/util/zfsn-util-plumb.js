@@ -1,7 +1,7 @@
 var plumbUtil = {
 	_tempConnObj: {}, // 临时的连线对象
 	// 实例化jsPlumb
-	getInstance: () => {
+	getInstance: function() {
 		let _base = FLOW._base;
 		
 		// 1、获取实例，设置相关属性
@@ -133,11 +133,11 @@ var plumbUtil = {
 		});
 	},
 	// 给节点添加端点，返回端点id
-	addEndPoint: (nodeId, anchors) => {
+	addEndPoint: function(nodeId, anchors) {
 		let _base = FLOW._base;
 		let endPointId = nodeId + '-' + ZFSN.getUUID();
 		
-		ZFSN.lazyExecute(() => {
+		ZFSN.lazyExecute(function() {
 			_base.plumb.addEndpoint(nodeId, {
 				uuid: endPointId,
 				anchors: anchors
@@ -147,7 +147,7 @@ var plumbUtil = {
 		return endPointId;
 	},
 	// 连接两个节点
-	connectNode: (sourceId, targetId, routerId, sourceAnchors, targetAnchors) => {
+	connectNode: function(sourceId, targetId, routerId, sourceAnchors, targetAnchors) {
 		let _base = FLOW._base;
 		
 		// 1、新增端点，一条连接线两个端点
@@ -155,7 +155,7 @@ var plumbUtil = {
 		let targetEndPointId = plumbUtil.addEndPoint(targetId, targetAnchors);
 		
 		// 2、连接
-		ZFSN.lazyExecute(() => {
+		ZFSN.lazyExecute(function() {
 			// 2.1、连接之前赋值临时的连线对象，用于连线后触发plumb绑定的connection事件
 			plumbUtil._tempConnObj.sourceId = sourceId;
 			plumbUtil._tempConnObj.targetId = targetId;
@@ -179,12 +179,12 @@ var plumbUtil = {
 		graphUtil.addEdge(sourceId, targetId, edge);
 	},
 	// 设置节点可以被移动
-	setNodeDraggable: (nodeId) => {
+	setNodeDraggable: function(nodeId) {
 		let scrollX;
 		let scrollY;
 		let _base = FLOW._base;
 		
-		ZFSN.lazyExecute(() => {
+		ZFSN.lazyExecute(function() {
 			_base.plumb.draggable(nodeId, {
 				filter:".enableDraggable",
 				containment: 'parent',
@@ -220,7 +220,7 @@ var plumbUtil = {
 		});
 	},
 	// 允许节点被移动
-	ableDraggable: (nodeId) => {
+	ableDraggable: function(nodeId) {
 		let _base = FLOW._base;
 		let flag = _base.plumb.toggleDraggable(nodeId);
 		if (!flag) {
@@ -228,7 +228,7 @@ var plumbUtil = {
 		}
 	},
 	// 禁止节点被移动
-	unableDraggable: (nodeId) => {
+	unableDraggable: function(nodeId) {
 		let _base = FLOW._base;
 		let flag = _base.plumb.toggleDraggable(nodeId);
 		if (flag) {
@@ -236,7 +236,7 @@ var plumbUtil = {
 		}
 	},
 	// 获取连线文本
-	getRouterLabel: (sourceId, targetId) => {
+	getRouterLabel: function(sourceId, targetId) {
 		let _base = FLOW._base;
 		
 		let routerLabel = _base.plumb.getConnections({
@@ -247,10 +247,10 @@ var plumbUtil = {
 		return routerLabel;
 	},
 	// 设置连线文本
-	setRouterLabel: (sourceId, targetId, label) => {
+	setRouterLabel: function(sourceId, targetId, label) {
 		let _base = FLOW._base;
 		
-		ZFSN.lazyExecute(() => {
+		ZFSN.lazyExecute(function() {
 			if (strUtil.isNotBlank(label)) {
 				// 文本不为空
 				_base.plumb.getConnections({
@@ -276,7 +276,7 @@ var plumbUtil = {
 		});
 	},
 	// 对齐方式检查
-	alignWayCheck: () => {
+	alignWayCheck: function() {
 		let _base = FLOW._base;
 		
 		// 1、检查选中的节点个数是否大于等于2
@@ -287,7 +287,7 @@ var plumbUtil = {
 		return _base.selectedNodeList;
 	},
 	// 左对齐
-	leftAlign: (selectedNodeIdArr) => {
+	leftAlign: function(selectedNodeIdArr) {
 		let _base = FLOW._base;
 		
 		// 1、第一个选中的节点的初始值，其余节点以此为基准
@@ -305,7 +305,7 @@ var plumbUtil = {
 		}
 	},
 	// 垂直居中
-	verticalCenter: (selectedNodeIdArr) => {
+	verticalCenter: function(selectedNodeIdArr) {
 		let _base = FLOW._base;
 		
 		// 1、第一个选中的节点的初始值，其余节点以此为基准
@@ -324,7 +324,7 @@ var plumbUtil = {
 		}
 	},
 	// 右对齐
-	rightAlign: (selectedNodeIdArr) => {
+	rightAlign: function(selectedNodeIdArr) {
 		let _base = FLOW._base;
 		
 		// 1、第一个选中的节点的初始值，其余节点以此为基准
@@ -343,7 +343,7 @@ var plumbUtil = {
 		}
 	},
 	// 上对齐
-	upAlign: (selectedNodeIdArr) => {
+	upAlign: function(selectedNodeIdArr) {
 		let _base = FLOW._base;
 		
 		// 1、第一个选中的节点的初始值，其余节点以此为基准
@@ -361,7 +361,7 @@ var plumbUtil = {
 		}
 	},
 	// 水平居中
-	levelAlign: (selectedNodeIdArr) => {
+	levelAlign: function(selectedNodeIdArr) {
 		let _base = FLOW._base;
 		
 		// 1、第一个选中的节点的初始值，其余节点以此为基准
@@ -380,7 +380,7 @@ var plumbUtil = {
 		}
 	},
 	// 下对齐
-	downAlign: (selectedNodeIdArr) => {
+	downAlign: function(selectedNodeIdArr) {
 		let _base = FLOW._base;
 		
 		// 1、第一个选中的节点的初始值，其余节点以此为基准
@@ -399,7 +399,7 @@ var plumbUtil = {
 		}
 	},
 	// 设置泳道可被缩放
-	laneResizable: (id) => {
+	laneResizable: function(id) {
 		let _base = FLOW._base;
 		
 		id = ZFSN.getJQSel(id);

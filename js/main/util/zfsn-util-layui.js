@@ -1,14 +1,14 @@
 var layuiUtil = {
 	tempId: '',
 	// 关闭子层
-	closeFrame: () => {
+	closeFrame: function() {
 		// 1、获取窗口索引
 	    let index = parent.layer.getFrameIndex(window.name);
 	    // 2、关闭弹出的子页面窗口
 	    parent.layer.close(index);
 	},
 	// 帮助文档
-	helpDoc: () => {
+	helpDoc: function() {
 		let index = layer.open({
 			type: 2,
 			title: '帮助文档',
@@ -20,7 +20,7 @@ var layuiUtil = {
 		layer.full(index);
 	},
 	// 快捷键大全
-	shortcutKey: () => {
+	shortcutKey: function() {
 		layer.open({
 			type: 1,
 			title: "快捷键手册",
@@ -130,7 +130,7 @@ var layuiUtil = {
 		});
 	},
 	// 设置
-	setting: () => {
+	setting: function() {
 		// 防止用户无限快捷键打开设置窗口
 		layer.closeAll();
 		
@@ -146,7 +146,7 @@ var layuiUtil = {
 		});
 	},
 	// 编辑连线属性
-	connectionAttr: (connId) => {
+	connectionAttr: function(connId) {
 		layuiUtil.tempId = connId;
 		
 		layer.open({
@@ -161,7 +161,7 @@ var layuiUtil = {
 		});
 	},
 	// 编辑节点属性
-	editNodeAttribute: (tempId) => {
+	editNodeAttribute: function(tempId) {
 		layuiUtil.tempId = tempId;
 		
 		layer.open({
@@ -176,7 +176,7 @@ var layuiUtil = {
 		});
 	},
 	// 设置节点样式
-	setNodeStyle: (tempId) => {
+	setNodeStyle: function(tempId) {
 		layuiUtil.tempId = tempId;
 		
 		layer.open({
@@ -195,7 +195,7 @@ var layuiUtil = {
 		});
 	},
 	// 编辑泳道属性
-	laneAttr: (tempId) => {
+	laneAttr: function(tempId) {
 		layuiUtil.tempId = tempId;
 		
 		layer.open({
@@ -210,7 +210,7 @@ var layuiUtil = {
 		});
 	},
 	// 测试窗口
-	test: () => {
+	test: function() {
 		let pwd = prompt('请输入密码：');
 		if (pwd == CONFIG.defaultConfig.testPwd) {
 			layer.open({

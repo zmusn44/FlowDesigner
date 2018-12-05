@@ -19,7 +19,7 @@ var graphUtil = {
 		this.targetAnchors = targetAnchors;
 	},
 	// 添加连线到图对象
-	addEdge: (sourceId, targetId, edge) => {
+	addEdge: function(sourceId, targetId, edge) {
 		let _base = FLOW._base;
 		
 		_base.graph.setEdge(sourceId, targetId, { // 源节点和目标节点的id
@@ -31,20 +31,20 @@ var graphUtil = {
 		});
 	},
 	// 获取图对象中被标记为选中的节点的id数组
-	getSelectedNodeIds: () => {
+	getSelectedNodeIds: function() {
 		let _base = FLOW._base;
 		let nodeIds = _base.graph.nodes();
 		let selectedNodeIds = [];
 		
-		for (let nodeId of nodeIds) {
-			if (_base.graph.node(nodeId).isSelected) {
-				selectedNodeIds.push(nodeId);
+		for (let i = 0, len = nodeIds.length; i < len; i++) {
+			if (_base.graph.node(nodeIds[i]).isSelected) {
+				selectedNodeIds.push(nodeIds[i]);
 			}
 		}
 		return selectedNodeIds;
 	},
 	// 更新图对象中的节点
-	updateNode: (id) => {
+	updateNode: function(id) {
 		let _base = FLOW._base;
 		let $this = $(ZFSN.getJQSel(id));
 		let graphNode = _base.graph.node(ZFSN.removeJQSel(id));
@@ -59,16 +59,16 @@ var graphUtil = {
 		graphNode.bgColor = $this.attr('bgColor-gradient');
 	},
 	// 更新图对象中的所有节点
-	updateAllNode: () => {
+	updateAllNode: function() {
 		let _base = FLOW._base;
 		let nodeArr = _base.graph.nodes();
 		
-		for (let nodeId of nodeArr) {
-			graphUtil.updateNode(nodeId);
+		for (let i = 0, len = nodeArr.length; i < len; i++) {
+			graphUtil.updateNode(nodeArr[i]);
 		}
 	},
 	// 检查流程图合法性
-	checkGraph: () => {
+	checkGraph: function() {
 		let _base = FLOW._base;
 		
 		// 克隆graph对象
@@ -86,7 +86,7 @@ var graphUtil = {
 		return msg;
 	},
 	// 保存为图片之前检查是否合法
-	checkGraphBySave2Photo: () => {
+	checkGraphBySave2Photo: function() {
 		let _base = FLOW._base;
 		let msg = '0';
 		let nodeArr = _base.graph.nodes();
@@ -97,15 +97,15 @@ var graphUtil = {
 		return msg;
 	},
 	// 放置、粘贴新节点时检查图对象
-	checkGraphBeforeCreate: (nodeType) => {
+	checkGraphBeforeCreate: function(nodeType) {
 		let _base = FLOW._base;
 		let msg = '0';
 		
 		// 1、只允许有一个开始节点
 		if (nodeType == 'start') {
 			let nodeIds = _base.graph.nodes();
-			for (let nodeId of nodeIds) {
-				if (_base.graph.node(nodeId).nodeType == 'start') {
+			for (let i = 0, len = nodeIds.length; i < len; i++) {
+				if (_base.graph.node(nodeIds[i]).nodeType == 'start') {
 					msg = CONFIG.msg.repeatStartNode;
 					return msg;
 				}
@@ -114,7 +114,7 @@ var graphUtil = {
 		return msg;
 	},
 	// 根据画布中的节点获取canvas的尺寸
-	getCanvasSizeByNode: () => {
+	getCanvasSizeByNode: function() {
 		let _base = FLOW._base;
 		let nodeArr = _base.graph.nodes();
 		let firstNodeTop = _base.graph.node(nodeArr[0]).locTop;
@@ -124,9 +124,9 @@ var graphUtil = {
 		let maxLeft = firstNodeLeft;
 		let minLeft = firstNodeLeft;
 		
-		for (let nodeId of nodeArr) {
-			let t = _base.graph.node(nodeId).locTop;
-			let l = _base.graph.node(nodeId).locLeft;
+		for (let i = 0, len = nodeArr.length; i < len; i++) {
+			let t = _base.graph.node(nodeArr[i]).locTop;
+			let l = _base.graph.node(nodeArr[i]).locLeft;
 			
 			if (t > maxTop) {
 				maxTop = t;
@@ -148,7 +148,7 @@ var graphUtil = {
 		};
 	},
 	// 根据id移除节点以及关于节点的所有连线、端点，返回删除的路由线id数组
-	removeNodeAndEdgesById: (id) => {
+	removeNodeAndEdgesById: function(id) {
 		let _base = FLOW._base;
 		let deleteRouterIdArr = [];
 		
@@ -168,7 +168,7 @@ var graphUtil = {
 		return deleteRouterIdArr;
 	},
 	// 更新泳道对象
-	updateLaneObjs: (id) => {
+	updateLaneObjs: function(id) {
 		let _base = FLOW._base;
 		let $this = $(ZFSN.getJQSel(id));
 		let laneObj = _base.laneObjs[ZFSN.removeJQSel(id)];

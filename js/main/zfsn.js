@@ -17,10 +17,10 @@ Array.prototype.deleteOne = function(data) {
 // 工具助手
 var ZFSN = {
 	// 控制台输出
-	consoleLog: (strArr) => {
+	consoleLog: function(strArr) {
 		let log = '';
-		for (let str of strArr) {
-			log += str + '\n';
+		for (let i = 0, len = strArr.length; i < len; i++) {
+			log += strArr[i] + '\n';
 		}
 		console.log('%c' + log, 'color: red; font-weight: bold;');
 	},
@@ -33,7 +33,7 @@ var ZFSN = {
 		};
 	},
 	// 加载json文件
-	loadJsonFromUrl: (url, method, callback, noCache) => {
+	loadJsonFromUrl: function(url, method, callback, noCache) {
 		if (noCache === undefined) noCache = true;
 		var xmlhttp;
 		if (!method) {
@@ -68,31 +68,31 @@ var ZFSN = {
 		}
 	},
 	// 通过id获取jQuery选择器
-	getJQSel: (id) => {
+	getJQSel: function(id) {
 		if (id.indexOf('#') != 0) {
 			id = '#' + id;
 		}
 		return id;
 	},
 	// 获取移除了jQuery选择器前缀的id
-	removeJQSel: (id) => {
+	removeJQSel: function(id) {
 		if (id.indexOf('#') == 0) {
 			id = id.substring(1);
 		}
 		return id;
 	},
 	// 使程序睡眠d毫秒
-	sleep: (d) => {
+	sleep: function(d) {
 		for(let t = Date.now(); Date.now() - t <= d;);
 	},
-	// 延时10ms执行
-	lazyExecute: (f) => {
-		setTimeout(() => {
+	// 延时30ms执行
+	lazyExecute: function(f) {
+		setTimeout(function() {
 			f();
-		}, 10);
+		}, 30);
 	},
 	// 获取uuid
-	getUUID: () => {
+	getUUID: function() {
 		let s = [];
 		let hexDigits = "0123456789abcdef";
 		for(let i = 0; i < 36; i++) {
@@ -106,7 +106,7 @@ var ZFSN = {
 		return uuid.replace(/-/g, '');
 	},
 	// 获取节点四个角坐标
-	getNodeCoordinate: (nodeId) => {
+	getNodeCoordinate: function(nodeId) {
 		nodeId = ZFSN.getJQSel(nodeId);
 		var x11 = $(nodeId).offset().left;
 		var y11 = $(nodeId).offset().top;
@@ -129,11 +129,11 @@ var ZFSN = {
 		};
 	},
 	// 获取全局配置
-	getConfig: () => {
+	getConfig: function() {
 		return CONFIG;
 	},
 	// 根据div的高度算出字行距实现竖排字自动排版
-	getLaneLineHeight: (text, height) => {
+	getLaneLineHeight: function(text, height) {
 		let textArr = text.split(''), i = textArr.length, h = parseInt(height);
 		return h / (i * 15);
 	}

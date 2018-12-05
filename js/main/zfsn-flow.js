@@ -23,9 +23,9 @@ window.FLOW = {
 		tempFlag: true, // 微移临时的标识
 		laneObjs: [], // 泳道数组
 	},
-	ready: (f) => { f(); },
+	ready: function(f) { f(); },
 	// 初始化流程设计器
-	init: () => {
+	init: function() {
 		let _info = FLOW._info;
 		
 		// 1、渲染流程设计器
@@ -42,7 +42,7 @@ window.FLOW = {
 		]);
 	},
 	// 加载json数据到流程设计器
-	loadJson: (data) => {
+	loadJson: function(data) {
 		let _base = FLOW._base;
 		
 		// 节点数组
@@ -51,26 +51,26 @@ window.FLOW = {
 		let linkArr = data.linkDataArray;
 		
 		// 1、渲染节点到画布
-		for (let node of nodeArr) {
+		for (let i = 0, len = nodeArr.length; i < len; i++) {
 			// 根据节点类型获取要渲染的节点对象
-			let renderNode = FLOW.getRenderNodeFromType(node.nodeType);
+			let renderNode = FLOW.getRenderNodeFromType(nodeArr[i].nodeType);
 			
-			node.cla = renderNode.cla;
-			node.icon = renderNode.icon;
-			FLOW._createNewNode(node);
+			nodeArr[i].cla = renderNode.cla;
+			nodeArr[i].icon = renderNode.icon;
+			FLOW._createNewNode(nodeArr[i]);
 		}
 		
 		// 2、渲染连线到画布
-		for (let link of linkArr) {
+		for (let i = 0, len = linkArr.length; i < len; i++) {
 			// 2.1、连线
-			plumbUtil.connectNode(link.from, link.to, link.routerId, link.sourceAnchors, link.targetAnchors);
+			plumbUtil.connectNode(linkArr[i].from, linkArr[i].to, linkArr[i].routerId, linkArr[i].sourceAnchors, linkArr[i].targetAnchors);
 			
 			// 2.2、添加连线文本
-			plumbUtil.setRouterLabel(link.from, link.to, link.label);
+			plumbUtil.setRouterLabel(linkArr[i].from, linkArr[i].to, linkArr[i].label);
 		}
 	},
 	// 创建新节点
-	createNewNode: (nodeType, pos) => {
+	createNewNode: function(nodeType, pos) {
 		let _base = FLOW._base;
 		
 		// 1、创建前的检查
@@ -99,7 +99,7 @@ window.FLOW = {
 		
 		return renderNode.id;
 	},
-	_createNewNode: (renderNode) => {
+	_createNewNode: function(renderNode) {
 		let _base = FLOW._base;
 		
 		// 1、节点类型为泳道时特殊处理
@@ -156,7 +156,7 @@ window.FLOW = {
 		
 		return renderNode;
 	},
-	_createLane: (renderNode) => {
+	_createLane: function(renderNode) {
 		let _base = FLOW._base;
 		
 		// 添加到画板中
@@ -236,7 +236,7 @@ window.FLOW = {
 		_base.laneObjs[renderNode.key] = laneObj;
 	},
 	// 根据节点类型获取要渲染的节点对象
-	getRenderNodeFromType: (type) => {
+	getRenderNodeFromType: function(type) {
 		let renderNode;
 		
 		switch(type) {
@@ -367,7 +367,7 @@ window.FLOW = {
 		return renderNode;
 	},
 	// 监听节点
-	registerNodeEvent: (tempId) => {
+	registerNodeEvent: function(tempId) {
 		let selector = strUtil.isBlank(tempId) ? '.moveLight' : ZFSN.getJQSel(tempId);
 		let $this = FLOW;
 		let _base = $this._base;
@@ -447,7 +447,7 @@ window.FLOW = {
 		});
 	},
 	// 保存流程图
-	save: () => {
+	save: function() {
 		// 1、检查流程图合法性
 		let checkMsg = graphUtil.checkGraph();
 		if (checkMsg != '0') {
@@ -471,7 +471,7 @@ window.FLOW = {
 		});
 	},
 	// 保存为图片
-	save2Photo: () => {
+	save2Photo: function() {
 		// 1、检查当前流程图是否可以保存为图片
 		let checkMsg = graphUtil.checkGraphBySave2Photo();
 		if (checkMsg != '0') {
@@ -535,7 +535,7 @@ window.FLOW = {
 		}, 1000);
 	},
 	// 获取当前的流程图对象
-	getCurrentFlow: () => {
+	getCurrentFlow: function() {
 		let _base = FLOW._base;
 		let flowDoc = {};
 		let nodeDataArray = [];
@@ -590,7 +590,7 @@ window.FLOW = {
 		return flowDoc;
 	},
 	// 清除所有的定时器
-	clearAllTimer: () => {
+	clearAllTimer: function() {
 		let _base = FLOW._base;
 		let allTimer = _base.allTimer;
 		
@@ -607,7 +607,7 @@ window.FLOW = {
 		});
 	},
 	// 清除画布，重新绘制
-	clearCanvas: () => {
+	clearCanvas: function() {
 		let _base = FLOW._base;
 		
 		layer.confirm(CONFIG.msg.clearConfirm, { icon: 7, title: '提示' }, function(index) {
@@ -621,7 +621,7 @@ window.FLOW = {
 		});
 	},
 	// 选中节点
-	selectedNode: (id) => {
+	selectedNode: function(id) {
 		let _base = FLOW._base;
 		
 		// 1、清除所有的定时器
@@ -642,7 +642,7 @@ window.FLOW = {
 		_base.selectedMultipleFlag = true;
 	},
 	// 取消选中节点
-	noSelectedNode: (id) => {
+	noSelectedNode: function(id) {
 		let _base = FLOW._base;
 		
 		if (_base.selectedNodeList.indexOf(id) != -1) {
@@ -658,7 +658,7 @@ window.FLOW = {
 		}
 	},
 	// 除了 id 之外的节点，将节点变为非选中状态，若不传id则表示将所有的节点变为非选中状态
-	changeToNoSelected: (id) => {
+	changeToNoSelected: function(id) {
 		let selector;
 		let _base = FLOW._base;
 		
@@ -681,7 +681,7 @@ window.FLOW = {
 		});
 	},
 	// 切换为鼠标工具
-	mouseTool: () => {
+	mouseTool: function() {
 		
 		let _base = FLOW._base;
 		
@@ -714,7 +714,7 @@ window.FLOW = {
 		});
 	},
 	// 切换为连线工具
-	connectionTool: () => {
+	connectionTool: function() {
 		// 切换显示
 		$('#mouseToolsBtn').css('color', '#444444');
 		$('#connectionToolsBtn').css('color', 'blue');
@@ -752,13 +752,13 @@ window.FLOW = {
 		});
 	},
 	// 移除实例中所有节点、端点、连线，清空画布，重置节点id对象、JsPlumb实例对象、图对象
-	removeAll: () => {
+	removeAll: function() {
 		let _base = FLOW._base;
 		
 		// 1、移除实例中所有节点、端点、连线等，用JsPlumb提供的remove方法即可
 		let nodeIds = _base.graph.nodes();
-		for (let nodeId of nodeIds) {
-			_base.plumb.remove(nodeId);
+		for (let i = 0, len = nodeIds.length; i < len; i++) {
+			_base.plumb.remove(nodeIds[i]);
 		}
 		
 		// 2、清空画布
@@ -771,7 +771,7 @@ window.FLOW = {
 		_base.graph = new graphlib.Graph();
 	},
 	// 显示/隐藏网格
-	changeGrid: () => {
+	changeGrid: function() {
 		if ($("#canvasId").css('background-image') == 'none') {
 			$("#canvasId").css('background-image', 'url(../images/grid.jpeg)');
 			$("#showGridId").children(':first-child').attr('class', 'fa fa-eye fa-2x iconClass showItemTxt');
@@ -789,7 +789,7 @@ window.FLOW = {
 		});
 	},
 	// 撤销
-	undo: () => {
+	undo: function() {
 		let _base = FLOW._base;
 		
 		if (_base.undoStack.length > 0) {
@@ -807,7 +807,7 @@ window.FLOW = {
 		}
 	},
 	// 重做
-	redo: () => {
+	redo: function() {
 		let _base = FLOW._base;
 		
 		if (_base.redoStack.length > 0) {
@@ -825,7 +825,7 @@ window.FLOW = {
 		}
 	},
 	// 退出流程设计器
-	exit: () => {
+	exit: function() {
 		let saveStatus = $('#saveStatus').css('display');
 		if (saveStatus == 'block') {
 			layer.confirm(CONFIG.msg.closeFrame, { icon: 7, title: '提示' }, function(index) {
@@ -837,7 +837,7 @@ window.FLOW = {
 		}
 	},
 	// 全选
-	selectedAll: () => {
+	selectedAll: function() {
 		let _base = FLOW._base;
 		
 		$.each($('.moveLight'), function(index) {
@@ -857,7 +857,7 @@ window.FLOW = {
 		_base.selectedNodeList = _base.selectedNodeList.concat(graphUtil.getSelectedNodeIds());
 	},
 	// 删除连线
-	deleteConnection: (connId) => {
+	deleteConnection: function(connId) {
 		let _base = FLOW._base;
 		
 		layer.confirm(CONFIG.msg.deleteConn, { icon: 7, title: '提示' }, function(index) {
@@ -896,7 +896,7 @@ window.FLOW = {
 		});
 	},
 	// 复制
-	copyNode: (tempId) => {
+	copyNode: function(tempId) {
 		let _base = FLOW._base;
 		
 		// 1、清空剪贴板
@@ -906,15 +906,15 @@ window.FLOW = {
 		let selectedNodeIdArr = graphUtil.getSelectedNodeIds();
 		
 		// 3、将选中的节点push到剪贴板
-		for (let nodeId of selectedNodeIdArr) {
+		for (let i = 0, len = selectedNodeIdArr.length; i < len; i++) {
 			// 开始节点无法被复制
-			if (_base.graph.node(nodeId).nodeType != 'start') {
-				_base.myclipboard.push(nodeId);
+			if (_base.graph.node(selectedNodeIdArr[i]).nodeType != 'start') {
+				_base.myclipboard.push(selectedNodeIdArr[i]);
 			}
 		}
 	},
 	// 粘贴
-	pasteNode: () => {
+	pasteNode: function() {
 		let _base = FLOW._base;
 		
 		// 0、剪贴板无数据直接return
@@ -957,7 +957,7 @@ window.FLOW = {
 		}
 	},
 	// 删除节点
-	deleteNode: (tempId) => {
+	deleteNode: function(tempId) {
 		let _base = FLOW._base;
 		
 		// 1、获取被选中的节点id数组
@@ -973,15 +973,15 @@ window.FLOW = {
 			_base.myclipboard.length = 0;
 			
 			// 4、删除
-			for (let nodeId of selectedNodeIdArr) {
+			for (let i = 0, len = selectedNodeIdArr.length; i < len; i++) {
 				// 4.1、删除节点的端点、连线
-				graphUtil.removeNodeAndEdgesById(nodeId);
+				graphUtil.removeNodeAndEdgesById(selectedNodeIdArr[i]);
 				
 				// 4.2、删除id池中的id
-				idPoolUtil.removeNodeId(nodeId);
+				idPoolUtil.removeNodeId(selectedNodeIdArr[i]);
 				
 				// 4.3、删除节点
-				$(ZFSN.getJQSel(nodeId)).remove();
+				$(ZFSN.getJQSel(selectedNodeIdArr[i])).remove();
 			}
 			
 			// 5、关闭提示窗口
@@ -989,7 +989,7 @@ window.FLOW = {
 		});
 	},
 	// 闪烁显示连线路径
-	showConnectionRoute: (id, type) => {
+	showConnectionRoute: function(id, type) {
 		id = ZFSN.removeJQSel(id);
 		let _base = FLOW._base;
 		let noRouteFlag = true;
@@ -1028,7 +1028,7 @@ window.FLOW = {
 		}
 	},
 	// 微移
-	smallMove: (moveType) => {
+	smallMove: function(moveType) {
 		let _base = FLOW._base;
 		let t, l, movePX = CONFIG.defaultConfig.smallMovePX;
 		
@@ -1060,14 +1060,14 @@ window.FLOW = {
 		// 获取被选中的节点id列表
 		let selectedArr = graphUtil.getSelectedNodeIds();
 		// 移动每一个被选中的元素
-		for (let nodeId of selectedArr) {
-			let newTop = $(ZFSN.getJQSel(nodeId)).offset().top + t;
-			let newLeft = $(ZFSN.getJQSel(nodeId)).offset().left + l;
-			$(ZFSN.getJQSel(nodeId)).offset({ top: newTop, left: newLeft });
+		for (let i = 0, len = selectedArr.length; i < len; i++) {
+			let newTop = $(ZFSN.getJQSel(selectedArr[i])).offset().top + t;
+			let newLeft = $(ZFSN.getJQSel(selectedArr[i])).offset().left + l;
+			$(ZFSN.getJQSel(selectedArr[i])).offset({ top: newTop, left: newLeft });
 			
 			// 更新图对象
-			_base.graph.node(nodeId).locTop = newTop;
-			_base.graph.node(nodeId).locLeft = newLeft;
+			_base.graph.node(selectedArr[i]).locTop = newTop;
+			_base.graph.node(selectedArr[i]).locLeft = newLeft;
 			
 			// 产生了微移，将微移标识改为true
 			_base.isSmallMove = true;
@@ -1077,7 +1077,7 @@ window.FLOW = {
 		_base.plumb.repaintEverything();
 	},
 	// 流程图产生微移后的处理
-	smallMoveHandler: () => {
+	smallMoveHandler: function() {
 		let _base = FLOW._base;
 		
 		_base.tempFlag = true;
@@ -1090,7 +1090,7 @@ window.FLOW = {
 		}
 	},
 	// 删除泳道
-	deleteLane: (tempId) => {
+	deleteLane: function(tempId) {
 		let _base = FLOW._base;
 		let id = $(ZFSN.getJQSel(tempId)).parent().attr('id');
 		
