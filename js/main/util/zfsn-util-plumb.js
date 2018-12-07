@@ -195,7 +195,7 @@ var plumbUtil = {
 				},
 				// 拖拽过程中实时更新节点位置
 				drag: function(event) {
-					//当前滚动条位置
+					// 当前滚动条位置
 					scrollX = $('#canvasId').scrollLeft();
 					scrollY = $('#canvasId').scrollTop();
 					if (!_base.selectedMultipleFlag) {

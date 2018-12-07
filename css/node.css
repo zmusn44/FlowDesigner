@@ -1,11 +1,13 @@
 /**
  * 使文本在鼠标拖动时不被选中
  */
-p, span, pre, img {
-	-webkit-user-select:none; 
-	-moz-user-select:none; 
-	-ms-user-select:none;
-	user-select:none;
+body {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 /**

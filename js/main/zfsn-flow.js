@@ -695,7 +695,7 @@ window.FLOW = {
 		// 鼠标工具可以使用多选框
 		let $events = $._data($('#Container')[0], 'events');
 		if (!$events || !$events['mousedown']) {
-			$('#Container').bind('mousedown', function() {
+			$('#Container').bind('mousedown', function(event) {
 				//在画布中按下鼠标获取鼠标位置
 				_base.px = event.pageX;
 				_base.py = event.pageY;
