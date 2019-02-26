@@ -1,8 +1,7 @@
 {
 	"defaultConfig": {
 		"resizableFlag": false,
-		"smallMovePX": 1,
-		"testPwd": "root"
+		"smallMovePX": 1
 	},
 	"defaultStyle": {
 		"selectedBoxShadow": "rgb(0, 0, 0) 0px 0px 20px 0px",
@@ -56,10 +55,31 @@
 		"connectionToolKey": 82,
 		"settingKey": 70
 	},
+	"rest": {
+		"sysid": "SysAdmin",
+	    "syspwd": "pass",
+	    "userId": "admin"
+	},
+	"url": {
+		"save": "rule?wf_num=R_S018_B030",
+		"deleteNode": "rule?wf_num=R_S002_B011&Action=DeleteNode",
+		"saveAllDefaultNode": "rule?wf_num=R_S002_B011&Action=SaveAllDefaultNode",
+		"setProperty": "rule?wf_num=R_S002_B002",
+		"checkLog": "page?wf_num=P_S003_001",
+		"currentUser": "rule?wf_num=R_S003_B047",
+		"publishUser": "rule?wf_num=R_S003_B047",
+		"checkChildFlow": "rule?wf_num=R_S003_B063",
+		"approveUserManager": "form?wf_num=F_S014_A002&WF_Action=edit",
+		"startEndNode": "rule?wf_num=R_S014_B001",
+		"setNodeUser": "r?wf_num=F_S026_A004",
+		"cancelUserSet": "r?wf_num=R_S026_B005",
+		"setSubProcess": "r?wf_num=F_S026_A005",
+		"flowSimRun": "r?wf_num=R_S026_B007",
+		"setRouter": "r?wf_num=R_S026_B004"
+	},
 	"msg": {
 		"noNode": "保存失败，流程图不存在任何节点",
 		"noConn": "保存失败，流程图存在未连接的节点",
-		"noSetNodeName": "保存失败，请设置节点名称",
 		"hasAcyclic": "保存失败，流程图中存在循环路径",
 		"noNodeBySave2Photo": "图中无节点，无法保存为图片",
 		"deleteConn": "确定要删除连接吗？",

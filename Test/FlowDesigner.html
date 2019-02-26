@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>流程绘制器</title>
+		<title>联科BPM流程绘制</title>
 		
 		<link rel="stylesheet" href="../css/node.css" />
 		<link rel="stylesheet" href="../layui/css/layui.css" />
@@ -96,10 +96,18 @@
 						</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript: setting();">
-							<i class="fa fa-cog fa-2x fa-fw iconClass showItemTxt" aria-hidden="true" type="3"></i>
+						<a href="javascript: void(0);">
+							<i class="fa fa-cog fa-2x fa-fw iconClass" aria-hidden="true" type="3"></i>
 							<span hidden="hidden">设置</span>
 						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript: setting();"><p>设计器设置</p></a>
+							</dd>
+							<dd>
+								<a href="javascript: urlSetting();"><p>接口设置</p></a>
+							</dd>
+						</dl>
 					</li>
 					<li class="layui-nav-item">
 						<a href="javascript: void(0);">
@@ -246,7 +254,7 @@
 			
 			<!-- 底部固定区域 -->
 			<div class="layui-footer" align="center" style="background-color: #eeeeee;">
-				<p>流程绘制器 V1.0</p>
+				<p>联科BPM流程绘制 V1.0</p>
 			</div>
 		</div>
 
@@ -261,6 +269,9 @@
 	<script type="text/javascript" src="../js/graphlib.min.js"></script>
 	<script type="text/javascript" src="../js/html2canvas.min.js"></script>
 	<script type="text/javascript" src="../js/canvg.js"></script>
+	<script type="text/javascript" src="../plugings/ext/adapter/ext/ext-base.js"></script>
+	<script type="text/javascript" src="../plugings/ext/ext-all.js"></script>
+	<script type="text/javascript" src="../plugings/ext/wf/sharefunction.js"></script>
 	
 	<script type="text/javascript" src="../myjs/GlobalVar.js"></script>
 	<script type="text/javascript" src="../util/StringUtils.js"></script>

@@ -1,7 +1,3 @@
-/**
- * 流程仿真JS文件
- */
-
 var isIE = isIE();
 var PauseDocUnid = "";
 var SimProcessUnid = GetUrlArg("SimProcessUnid");
@@ -11,7 +7,7 @@ var PauseProcessid = Processid;
 
 var initColor = '#ccab26';
 var animateColor = '#ff0000';
-var animateAfterColor = '#ffcc00';
+var animateAfterColor = '#00ad00';
 var nodePath, index = 0;
 var tipMsg = '';
 var common;
@@ -24,6 +20,20 @@ $(function() {
 	    type: 'get',
 	    success: function(data) {
 			CONFIG = data;
+	    }
+	});
+	$.ajax({
+	    url: projectName + "rest/flowDesigner/restConfig",
+	    type: 'get',
+	    headers: {
+	    	sysid: CONFIG.rest.sysid,
+	    	syspwd: CONFIG.rest.syspwd,
+	    	userId: CONFIG.rest.userId
+	    },
+	    success: function(data) {
+	    	if (data.Status != '0') {
+	    		CONFIG.url = data;
+	    	}
 	    }
 	});
 	
@@ -83,10 +93,10 @@ function showFlow(o) {
 							  );
 		
 		//设置节点的位置
-		$("#" + nodeArr[i].key).offset({ top: nodeArr[i].locTop, left: nodeArr[i].locLeft });
+		$("#" + nodeArr[i].key).offset({ top: nodeArr[i].locTop, left: nodeArr[i].locLeft-200 });
 		
 		//设置节点的样式
-		$("#" + nodeArr[i].key).css('background', getNodeBgFromHexColor(nodeArr[i].bgColor));
+		$("#" + nodeArr[i].key).css('background', '#9c9696');
 		$("#" + nodeArr[i].key).css('height', nodeArr[i].nodeHeight);
 		$("#" + nodeArr[i].key).css('width', nodeArr[i].nodeWidth);
 		$("#" + nodeArr[i].key).css('line-height', nodeArr[i].nodeHeight);
@@ -354,7 +364,8 @@ function ShowNextNode(nodeid) {
  * @param {String} nodeId 节点id
  */
 function SetNodeUser(nodeId) {
-	var b = "r?wf_num=F_S026_A004&Nodeid=" + nodeId + "&Processid=" + Processid + "&SimProcessUnid=" + SimProcessUnid + "&DataDocUnid=" + DataDocUnid;
+	//var b = "r?wf_num=F_S026_A004&Nodeid=" + nodeId + "&Processid=" + Processid + "&SimProcessUnid=" + SimProcessUnid + "&DataDocUnid=" + DataDocUnid;
+	var b = CONFIG.url.setNodeUser + "&Nodeid=" + nodeId + "&Processid=" + Processid + "&SimProcessUnid=" + SimProcessUnid + "&DataDocUnid=" + DataDocUnid;
 	var c = new Ext.Window({
 		html: "<iframe src='" + b + "' frameborder=0 width=100% height=100% ></iframe>",
 		width: 450,
@@ -377,7 +388,8 @@ function SetNodeUser(nodeId) {
 function DelNodeUser(nodeId) {
 	Ext.getBody().mask('Waiting...', 'x-mask-loading');
 	Ext.Ajax.request({
-		url: 'r?wf_num=R_S026_B005',
+		//url: 'r?wf_num=R_S026_B005',
+		url: CONFIG.url.cancelUserSet,
 		success: function(a, b) {
 			var c = Ext.util.JSON.decode(a.responseText);
 			alert("成功取消");
@@ -398,7 +410,8 @@ function DelNodeUser(nodeId) {
  * @param {String} nodeId 节点id
  */
 function SetSubProcess(nodeId) {
-	var b = "r?wf_num=F_S026_A005&Nodeid=" + nodeId + "&Processid=" + Processid + "&SimProcessUnid=" + SimProcessUnid + "&DataDocUnid=" + DataDocUnid;
+	//var b = "r?wf_num=F_S026_A005&Nodeid=" + nodeId + "&Processid=" + Processid + "&SimProcessUnid=" + SimProcessUnid + "&DataDocUnid=" + DataDocUnid;
+	var b = CONFIG.url.setSubProcess + "&Nodeid=" + nodeId + "&Processid=" + Processid + "&SimProcessUnid=" + SimProcessUnid + "&DataDocUnid=" + DataDocUnid;
 	OpenUrl(b, 800, 600);
 }
 
@@ -409,8 +422,17 @@ function SetSubProcess(nodeId) {
 var currentNodeIds;
 function AutoRun(d) {
 	Ext.getBody().mask('Waiting...', 'x-mask-loading');
+	
+	var ns = graph.nodes();
+	for (l = 0; l < ns.length; l++) {
+		if (graph.node(ns[l]).nodeType == 'start') {
+			$('#' + graph.node(ns[l]).key).css('background', animateAfterColor);
+			break;
+		}
+	}
 	Ext.Ajax.request({
-		url: 'r?wf_num=R_S026_B007',
+		//url: 'r?wf_num=R_S026_B007',
+		url: CONFIG.url.flowSimRun,
 		method: 'GET',
 		success: function(a, b) {
 			Ext.getBody().unmask();
@@ -420,7 +442,12 @@ function AutoRun(d) {
 				return false;
 			}
 			if(c.Status == "End") {
-				console.log(c.Status);
+				for (l = 0; l < ns.length; l++) {
+					if (graph.node(ns[l]).nodeType == 'end') {
+						$('#' + graph.node(ns[l]).key).css('background', animateAfterColor);
+						break;
+					}
+				}
 				cancelCurentNodeid();
 				alert(c.msg);
 				return false;
@@ -464,11 +491,12 @@ function SetEndNodeColor(endNodeStrs) {
 	if (endNodeStrs == "" || PauseProcessid != Processid) return false;
 	var endNodeList = str2List(endNodeStrs, 'R'), i;
 	for (i = 0; i < endNodeList.length; i++) {
-		if (isIE) {
+		/*if (isIE) {
 			$(getJquerySelectorPrefix(endNodeList[i])).css('background', getNodeBgFromHexColor4IE('#ffcc00')); //兼容IE
 		} else {
 			$(getJquerySelectorPrefix(endNodeList[i])).css('background', getNodeBgFromHexColor('#ffcc00'));
-		}
+		}*/
+		$(getJquerySelectorPrefix(endNodeList[i])).css('background', animateAfterColor);
 	}
 }
 
@@ -476,12 +504,12 @@ function SetCurrentNodeColor(currentNodeStrs) {
 	if (currentNodeStrs == "" || PauseProcessid != Processid) return false;
 	var currentNodeList = str2List(currentNodeStrs, 'R'), i;
 	for (i = 0; i < currentNodeList.length; i++) {
-		if (isIE) {
+		/*if (isIE) {
 			$(getJquerySelectorPrefix(currentNodeList[i])).css('background', getNodeBgFromHexColor4IE('#ff0000')); //兼容IE
 		} else {
 			$(getJquerySelectorPrefix(currentNodeList[i])).css('background', getNodeBgFromHexColor('#ff0000'));
-		}
-		
+		}*/
+		$(getJquerySelectorPrefix(currentNodeList[i])).css('background', '#ff0000');
 	}
 }
 
@@ -489,11 +517,12 @@ function cancelCurentNodeid() {
 	if (currentNodeIds != undefined && currentNodeIds != "") {
 		var currentNodes = str2List(currentNodeIds, 'R'), i;
 		for (i = 0; i < currentNodes.length; i++) {
-			if (isIE) {
+			/*if (isIE) {
 				$(getJquerySelectorPrefix(currentNodes[i])).css('background', getNodeBgFromHexColor4IE('#ffcc00')); //兼容IE
 			} else {
 				$(getJquerySelectorPrefix(currentNodes[i])).css('background', getNodeBgFromHexColor('#ffcc00'));
-			}
+			}*/
+			$(getJquerySelectorPrefix(currentNodes[i])).css('background', animateAfterColor);
 		}
 	}
 }
@@ -520,7 +549,8 @@ function SetRouter(d, e) {
 	
 	Ext.getBody().mask('Waiting...', 'x-mask-loading');
 	Ext.Ajax.request({
-		url: 'r?wf_num=R_S026_B004',
+		//url: 'r?wf_num=R_S026_B004',
+		url: CONFIG.url.setRouter,
 		success: function(a, b) {
 			var c = Ext.util.JSON.decode(a.responseText);
 			if(c.Status == "ok") {

@@ -142,23 +142,18 @@ function getEleId() {
  * 测试子页面
  */
 function test() {
-	var pwd = prompt('请输入密码：');
-	if (pwd == CONFIG.defaultConfig.testPwd) {
-		layer.open({
-			type: 2,
-			title: "测试",
-			area: ['950px', '700px'],
-			shadeClose: true,
-			shift: 4,
-			closeBtn: 2,
-			content: ['test.html'],
-			end: function() {
-	
-			}
-		});
-	} else if (pwd.trim() != '') {
-		layer.alert('密码错误');
-	}
+	layer.open({
+		type: 2,
+		title: "测试",
+		area: ['950px', '700px'],
+		shadeClose: true,
+		shift: 4,
+		closeBtn: 2,
+		content: ['test.html'],
+		end: function() {
+
+		}
+	});
 }
 
 /**
@@ -247,22 +242,41 @@ function laneAttr(tempId) {
 }
 
 /**
- * 设置
+ * 设计器设置
  */
 function setting() {
 	//防止用户无限快捷键打开设置窗口
 	layer.closeAll();
 	layer.open({
 		type: 2,
-		title: "设置",
+		title: "设计器设置",
 		area: ['500px', '420px'],
 		shadeClose: true,
-		shift: 1,
+		shift: 2,
 		skin: 'layui-layer-rim',
 		closeBtn: 2,
 		content: ['Setting.html'],
 		end: function() {
 			common.connector[0] = CONFIG.conn.connectionType;
 		}
+	});
+}
+
+
+/**
+ * 接口设置
+ */
+function urlSetting() {
+	//防止用户无限快捷键打开设置窗口
+	layer.closeAll();
+	layer.open({
+		type: 2,
+		title: "接口设置",
+		area: ['1000px', '700px'],
+		shadeClose: true,
+		shift: 2,
+		skin: 'layui-layer-rim',
+		closeBtn: 2,
+		content: ['UrlSetting.html']
 	});
 }

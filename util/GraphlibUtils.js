@@ -78,24 +78,6 @@ function checkGraph() {
 	} /*else if (!graphlib.alg.isAcyclic(copyGraph)) {
 		msg = CONFIG.msg.hasAcyclic;
 	}*/
-	
-	//是否设置节点名称校验
-	var nodes = copyGraph.nodes(), i;
-	for (i = 0; i < nodes.length; i++) {
-		var node = copyGraph.node(nodes[i]);
-		var prefix = node.key.substring(0, 1);
-		if (prefix == 'T' || prefix == 'G' || prefix == 'S') {
-			if (node.alreadySetName == undefined || !node.alreadySetName) {
-				layer.tips(CONFIG.msg.noSetNodeName, '#' + node.key, {
-					tips: [3, '#23262e'],
-					time: 2000,
-					tipsMore: true
-				});
-				msg = CONFIG.msg.noSetNodeName;
-			}
-		}
-	}
-	
 	return msg;
 }
 

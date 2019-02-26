@@ -36,12 +36,12 @@ function getLANEOBJS() {
 var NODEIDOBJ;
 function NODEIDOBJ_INIT() {
 	this.NODEIDOBJ = {
-		'T': [], //人工节点、自动节点
-		'E': [], //开始、结束、事件节点
-		'G': [], //网关节点
-		'S': [], //子流程节点
-		'R': [], //路由线
-		'L': []  //泳道
+		'T': [],
+		'E': [],
+		'G': [],
+		'S': [],
+		'R': [],
+		'L': []
 	};
 }
 

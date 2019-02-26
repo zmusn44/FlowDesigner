@@ -48,23 +48,6 @@ function initJsPlumbInstance() {
 			var targetAnchors = CONFIG.anchors.targetAnchors;
 			targetAnchors = targetAnchors.length > 0 ? targetAnchors : CONFIG.anchors.defaultAnchors;
 			
-			if (info.sourceId.substring(0, 1) == 'G') {
-				sourceAnchors = [
-					[0, 1, 0, 1],
-					[0.7, 0.3, 1, 0],
-					[0, -0.4, 0, 0],
-					[-0.6, 0.3, 0, 0]
-				];
-			}
-			if (info.targetId.substring(0, 1) == 'G') {
-				targetAnchors = [
-					[0, 1, 0, 1],
-					[0.7, 0.3, 1, 0],
-					[0, -0.4, 0, 0],
-					[-0.6, 0.3, 0, 0]
-				];
-			}
-			
 			graph.setEdge(info.sourceId, info.targetId, {
 				id: connId,
 				sourceAnchors: sourceAnchors,
@@ -91,7 +74,7 @@ function initJsPlumbInstance() {
 			
 			//给连接线添加双击事件
 			$('#' + obj.c).dblclick(function(event) {
-				alert("双击我做咩野？");
+				editProperty(obj.c);
 			});
 		}
 	});

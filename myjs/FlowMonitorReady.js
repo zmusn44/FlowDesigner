@@ -1,11 +1,7 @@
-/**
- * 流程监控JS文件
- */
-
 var isIE = isIE();
 var initColor = '#ccab26';
 var animateColor = '#ff0000';
-var animateAfterColor = '#ffcc00';
+var animateAfterColor = '#00ad00';
 var nodePath, index = 0;
 var tipMsg = '';
 var common;
@@ -18,6 +14,20 @@ $(function() {
 	    type: 'get',
 	    success: function(data) {
 			CONFIG = data;
+	    }
+	});
+	$.ajax({
+	    url: projectName + "rest/flowDesigner/restConfig",
+	    type: 'get',
+	    headers: {
+	    	sysid: CONFIG.rest.sysid,
+	    	syspwd: CONFIG.rest.syspwd,
+	    	userId: CONFIG.rest.userId
+	    },
+	    success: function(data) {
+	    	if (data.Status != '0') {
+	    		CONFIG.url = data;
+	    	}
 	    }
 	});
 	
@@ -81,10 +91,10 @@ function showFlow(o) {
 							  );
 		
 		//设置节点的位置
-		$("#" + nodeArr[i].key).offset({ top: nodeArr[i].locTop, left: nodeArr[i].locLeft });
+		$("#" + nodeArr[i].key).offset({ top: nodeArr[i].locTop, left: nodeArr[i].locLeft-200 });
 		
 		//设置节点的样式
-		$("#" + nodeArr[i].key).css('background', getNodeBgFromHexColor(nodeArr[i].bgColor));
+		$("#" + nodeArr[i].key).css('background', '#9c9696');
 		$("#" + nodeArr[i].key).css('height', nodeArr[i].nodeHeight);
 		$("#" + nodeArr[i].key).css('width', nodeArr[i].nodeWidth);
 		$("#" + nodeArr[i].key).css('line-height', nodeArr[i].nodeHeight);
@@ -108,7 +118,8 @@ function showFlow(o) {
 			if (nodeType == 'comm') {
 				//查看审批日记
 				if (nodeName == 'currentNode' || nodeName == 'publishNode') {
-					var url="page?wf_num=P_S003_001&DocUnid=" + parent.docUnid + "&Nodeid=" + Nodeid;
+					//var url="page?wf_num=P_S003_001&DocUnid=" + parent.docUnid + "&Nodeid=" + Nodeid;
+					var url = CONFIG.url.checkLog + "&DocUnid=" + parent.docUnid + "&Nodeid=" + Nodeid;
 					menu.add(new Ext.menu.Item({ text: CONFIG.msg.flowNodeItem1, url: url, handler: ShowNodeRemark }));
 				} else {
 					menu.add(new Ext.menu.Item({ text: CONFIG.msg.flowNodeItem1, disabled: true }));
@@ -137,7 +148,8 @@ function showFlow(o) {
 			if (nodeName == 'currentNode') {
 				var insMenu=new Ext.menu.Item( { text: CONFIG.msg.flowNodeItem2, menu: {items:[]} } );
 				Ext.Ajax.request({
-					url: 'rule?wf_num=R_S003_B047',
+					//url: 'rule?wf_num=R_S003_B047',
+					url: CONFIG.url.currentUser,
 					method:'POST',
 					success: function(response, action) {
 						var responseArray = Ext.util.JSON.decode(response.responseText);
@@ -157,7 +169,8 @@ function showFlow(o) {
 			if (nodeName == 'currentNode' || nodeName == 'publishNode') {
 				var EndUserMenu=new Ext.menu.Item( { text: CONFIG.msg.flowNodeItem3, menu: {items:[]} } );
 				Ext.Ajax.request({
-					url: 'rule?wf_num=R_S003_B047',
+					//url: 'rule?wf_num=R_S003_B047',
+					url: CONFIG.url.publishUser,
 					method:'POST',
 					success : function(response, action) {
 							var responseArray = Ext.util.JSON.decode(response.responseText);
@@ -203,7 +216,8 @@ function showFlow(o) {
 			//查看子流程文档
 			if (nodeType == 'innerChildFlow' || nodeType == 'outerChildFlow') {
 				var insDocMenu = new Ext.menu.Item( { text: CONFIG.msg.flowNodeItem4, menu: {items:[]} } );
-				var url = 'rule?wf_num=R_S003_B063';
+				//var url = 'rule?wf_num=R_S003_B063';
+				var url = CONFIG.url.checkChildFlow;
 				Ext.Ajax.request({
 					url: url,
 					method: 'GET',
@@ -289,14 +303,23 @@ function initNode() {
 	//CurrentNodeid = 'T00003';
 	//EndNodeList = 'T00001,R00001,T00002,R00002';
 	
+	var ns = graph.nodes();
+	for (l = 0; l < ns.length; l++) {
+		if (graph.node(ns[l]).nodeType == 'start') {
+			EndNodeList = graph.node(ns[l]).key + ',' + EndNodeList;
+			break;
+		}
+	}
+	
 	//修改当前审批节点的样式
 	var currentNodeidArr = CurrentNodeid.split(','), j;
 	for (j = 0; j < currentNodeidArr.length; j++) {
-		if (isIE) {
+		/*if (isIE) {
 			$(getJquerySelectorPrefix(currentNodeidArr[j].trim())).css('background', getNodeBgFromHexColor4IE('#ff0000')); //兼容IE
 		} else {
 			$(getJquerySelectorPrefix(currentNodeidArr[j].trim())).css('background', getNodeBgFromHexColor('#ff0000'));
-		}
+		}*/
+		$(getJquerySelectorPrefix(currentNodeidArr[j].trim())).css('background', '#ff0000');
 		$(getJquerySelectorPrefix(currentNodeidArr[j].trim())).attr('name', 'currentNode');
 	}
 	
@@ -305,11 +328,12 @@ function initNode() {
 	for (i = 0; i < nodePath.length; i++) {
 		var thisNode = nodePath[i].trim();
 		if (currentNodeidArr.indexOf(thisNode) == -1) {
-			if (isIE) {
-				$(getJquerySelectorPrefix(thisNode)).css('background', getNodeBgFromHexColor4IE('#ffcc00')); //兼容IE
+			/*if (isIE) {
+				$(getJquerySelectorPrefix(thisNode)).css('background', getNodeBgFromHexColor4IE(animateAfterColor)); //兼容IE
 			} else {
-				$(getJquerySelectorPrefix(thisNode)).css('background', getNodeBgFromHexColor('#ffcc00'));
-			}
+				$(getJquerySelectorPrefix(thisNode)).css('background', getNodeBgFromHexColor(animateAfterColor));
+			}*/
+			$(getJquerySelectorPrefix(thisNode)).css('background', animateAfterColor);
 			$(getJquerySelectorPrefix(thisNode)).attr('name', 'publishNode');
 		}
 	}
@@ -378,7 +402,8 @@ function ShowNextNode(nodeid) {
  * 审批用户管理
  */
 function ShowApproveUser(item) {
-	var url = "form?wf_num=F_S014_A002&WF_Action=edit&Nodeid=" + item.Nodeid + "&WF_DocUnid=" + parent.docUnid;
+	//var url = "form?wf_num=F_S014_A002&WF_Action=edit&Nodeid=" + item.Nodeid + "&WF_DocUnid=" + parent.docUnid;
+	var url = CONFIG.url.approveUserManager + "&Nodeid=" + item.Nodeid + "&WF_DocUnid=" + parent.docUnid;
 	parent.$('#win').html("<iframe height='200px' width='100%' frameborder='0' src='" + url + "'></iframe>");
 	parent.$('#win').window({
 		width: 600,
@@ -392,7 +417,8 @@ function ShowApproveUser(item) {
  * 启动/结束本节点
  */
 function StartEndNode(item) {
-	var url = "rule?wf_num=R_S014_B001";
+	//var url = "rule?wf_num=R_S014_B001";
+	var url = CONFIG.url.startEndNode;
 	Ext.Ajax.request({
 		url: url,
 		method: 'POST',
