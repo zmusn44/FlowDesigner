@@ -48,8 +48,12 @@
 
 ```
 newFlow
-└───config  # 配置文件
-│   
+└───config
+│   │
+│	└───config.json # 配置文件
+│	│
+│	└───config配置说明.txt
+│
 └───css # 样式文件
 │
 └───helpDoc # 帮助文档
@@ -61,12 +65,36 @@ newFlow
 └───layui # 前端框架
 │
 └───myjs # 主要的js资源
+│	│
+│	└───FlowMonitorReady.js # 流程监控入口文件
+│	│
+│	└───FlowSimReady.js # 流程仿真入口文件
+│	│
+│	└───GlobalVar.js # 全局变量
+│	│
+│	└───MyFunction.js # 主要的函数文件，大部分逻辑都在这个文件中
+│	│
+│	└───MyLayui.js # layer弹出层相关代码
+│	│
+│	└───Ready.js # 程序入口文件
+│	│
+│	└───RightMenu.js # 右键菜单文件
+│	│
+│	└───ShowFlowReady.js # 查看流程图入口文件
 │
 └───plugings # 插件
 │
-└───Test # 页面
+└───Test # 所有的页面
 │
 └───util # 工具
+│	│
+│	└───GraphlibUtils.js # 主要是利用graphlib库中的相关方法实现图形描述的工具函数。如校验图形，存储图形等。
+│	│
+│	└───JsPlumbUtils.js # 主要是利用jsplumb库中的相关方法实现画图的工具函数。如连接节点、删除节点等。
+│	│
+│	└───LayuiUtils.js # 主要是利用layui库中的相关方法实现与layui相关的工具函数，如打开窗口等。
+│	│
+│	└───StringUtils.js # 一些常用的工具函数都放在这，例如生成uuid、十六进制颜色转Rgba颜色等。
 ```
 
 
