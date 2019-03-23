@@ -2,12 +2,14 @@
 FLOW.render = function() {
 	
 	// 1、加载语言环境
-	ZFSN.loadJsonFromUrl('/FlowDesigner/json/lang/' + CONFIG.defaultConfig.language + '.json', 'GET', function(err, text) {
-		if (!err) {
-			let data = JSON.parse(text);
-			CONFIG.msg = data;
-		}
-	});
+	if(!window.location.href.substring(0, 4) == 'file') {
+		ZFSN.loadJsonFromUrl('/FlowDesigner/json/lang/' + CONFIG.defaultConfig.language + '.json', 'GET', function(err, text) {
+			if (!err) {
+				let data = JSON.parse(text);
+				CONFIG.msg = data;
+			}
+		});
+	}
 	
 	// 2、JsPlumb初始化
 	jsPlumb.ready(function() {
@@ -48,11 +50,18 @@ FLOW.registerBaseEvent = function() {
 		//对齐到网格
 		//grid: [10, 10]
 		start: function(event, ui) {
-			$(ZFSN.getJQSel(event.target.id)).css('font-weight', 'bolder');
+			event.target.style.fontWeight = 'bolder';
 		},
 		stop: function(event, ui) {
-			$(ZFSN.getJQSel(event.target.id)).css('font-weight', 'normal');
+			event.target.style.fontWeight = 'normal';
 		}
+	});
+	
+	// 监听左侧节点颜色变化
+	$(".controler").mouseover(function() {
+		$(this).css('background-color', '#e2d8d8');
+	}).mouseout(function() {
+		$(this).css('background-color', '#eee');
 	});
 	
 	// 监听节点的放置
@@ -84,26 +93,31 @@ FLOW.registerBaseEvent = function() {
 		let pyy = event.pageY;
 		let h = pyy - _base.py;
 		let w = pxx - _base.px;
+		// canvasId的相对位置
+		let canvasX = $('#canvasId').offset().left;
+		let canvasY = $('#canvasId').offset().top;
+		
+		// 滚动条的位置
 		let scrollX = $('#canvasId').scrollLeft();
 		let scrollY = $('#canvasId').scrollTop();
 		
-		//创建矩形div，只创建一次
+		// 创建矩形div，只创建一次
 		if ($('#multipleSelectedRectangle').attr('id') == undefined) {
 			$('#Container').append('<div id="multipleSelectedRectangle" style="background-color:#31676f;"></div>');
 		}
 		
-		//画出矩形
+		// 画出矩形
 		if (h < 0 && w >= 0) {
-            $("#multipleSelectedRectangle").css({ "height": (-h) + "px", "width": w + "px", "position": "absolute", "left": _base.px + scrollX - 250 + "px", "top": pyy + scrollY - 60 + "px", "opacity": "0.2", "border": "1px dashed #000" });
+            $("#multipleSelectedRectangle").css({ "height": (-h) + "px", "width": w + "px", "position": "absolute", "left": _base.px - canvasX + scrollX + "px", "top": pyy - canvasY + scrollY + "px", "opacity": "0.2", "border": "1px dashed #000" });
         }
         else if (h >= 0 && w < 0) {
-            $("#multipleSelectedRectangle").css({ "height": h + "px", "width": (-w) + "px", "position": "absolute", "left": pxx + scrollX - 250 + "px", "top": _base.py + scrollY - 60 + "px", "opacity": "0.2", "border": "1px dashed #000" });
+            $("#multipleSelectedRectangle").css({ "height": h + "px", "width": (-w) + "px", "position": "absolute", "left": pxx - canvasX + scrollX + "px", "top": _base.py - canvasY + scrollY + "px", "opacity": "0.2", "border": "1px dashed #000" });
         }
         else if (h < 0 && w < 0) {
-            $("#multipleSelectedRectangle").css({ "height": (-h) + "px", "width": (-w) + "px", "position": "absolute", "left": pxx + scrollX - 250 + "px", "top": pyy + scrollY - 60 + "px", "opacity": "0.2", "border": "1px dashed #000" });
+            $("#multipleSelectedRectangle").css({ "height": (-h) + "px", "width": (-w) + "px", "position": "absolute", "left": pxx - canvasX + scrollX + "px", "top": pyy - canvasY + scrollY + "px", "opacity": "0.2", "border": "1px dashed #000" });
         }
         else {
-            $("#multipleSelectedRectangle").css({ "height": h + "px", "width": w + "px", "position": "absolute", "left": _base.px + scrollX - 250 + "px", "top": _base.py + scrollY - 60 + "px", "opacity": "0.2", "border": "1px dashed #000" });
+            $("#multipleSelectedRectangle").css({ "height": h + "px", "width": w + "px", "position": "absolute", "left": _base.px - canvasX + scrollX + "px", "top": _base.py - canvasY + scrollY + "px", "opacity": "0.2", "border": "1px dashed #000" });
         }
         if (w < 0) {
             w = 0 - w;

@@ -10,17 +10,38 @@
 		<link rel="stylesheet" href="../plugings/layui/css/layui.css" />
 		<link href="../plugings/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="../plugings/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="../css/index.css" />
 		<link rel="stylesheet" href="../css/web.contextmenu.css" />
 
 		<style>
-			#Container {
-				height: 2000px;
-				width: 3000px;
+			html,body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+				background-color: #eeeeee;
 			}
 			
-			.canvasClass {
-				height: 845px;
+			/* 页头 */
+			.header {
+				clear: both;
+				height: 60px;
+				z-index: 1000;
+				background-color: #36507c;
+			}
+			
+			/* 页中 */
+			.middle {
+				height: 90%;
+			}
+			.middle #toolsBurId {
+				float: left;
+				width: 15%;
+				height: 100%;
+			}
+			.middle #canvasId {
+				float: left;
+				width: 63%;
+				height: 100%;
+				
 				/* 边框 */
 				border: 1px solid gray;
 				/* 网格背景图 */
@@ -32,37 +53,100 @@
 				/* 设置层叠等级 */
 				z-index: -1;
 			}
+			.middle #attrPanelId {
+				float: right;
+				width: 20%;
+				height: 100%;
+				margin-right: 20px;
+			}
+			#Container {
+				height: 1000%;
+				width: 1000%;
+				position: relative;
+			}
 			
-			.iconClass {
+			/* 页脚 */
+			.foot {
+				clear: both;
+				text-align: center;
+				margin: 8px;
+			}
+			
+			/* logo */
+			.logo {
+				padding: 15px;
+			}
+			.logo img {
+				margin-right: 20px;
+				height: 40px;
+			}
+			.logo span {
 				color: white;
+				font-size: 20px;
+				padding-left: 10px;
+				font-weight: bolder;
+				border-left: 1px #cecece solid;
 			}
 			
-			.nodeSpan {
-				color: #575765;
-				font-size: 15px;
-			}
-			
+			/* 修改图标大小 */
 			.fa-2x {
 				font-size: 1.5em;
+			}
+			/* 修改按钮组的背景色 */
+			.layui-nav {
+				background-color: #36507C;
+			}
+			/* 未保存标识位置调整 */
+			.layui-nav .layui-badge, .layui-nav .layui-badge-dot {
+				margin: -8px 25px 0;
+			}
+			/* 属性tab页调整 */
+			.layui-tab {
+				height: 100%;
+				margin: 0;
+			}
+			
+			/* 鼠标、连线工具 */
+			#unableDraggableDiv, #enableDraggableDiv {
+				margin: 5px;
+				float: left;
+				width: 40%;
+				cursor: pointer;
+			}
+			
+			/* 可移动放置的节点 */
+			.controler {
+				cursor: move;
+				height: 50px;
+				text-align: center;
+			}
+			.controler > div {
+				margin-left: 50px;
+				margin-top: 8px;
+			}
+			.controler .descTxt {
+				padding: 15px;
 			}
 		</style>
 
 	</head>
 
-	<body class="layui-layout-body" style="background-color: #eeeeee;">
-
-		<div class="layui-layout layui-layout-admin">
-			<div class="layui-header" style="background-color: #36507c;">
+	<body>
+		<div style="height: 100%;">
+			<!--页头-->
+			<div class="header">
 				<!-- logo -->
-				<div class="layui-logo" style="width: 380px; text-align: left; left: 50px;">
-					<img src="../images/logo.png" style="margin-right: 20px;" />
-					<span class="iconClass" style="font-size: 20px; padding-left: 10px; font-weight: bolder; border-left: 1px #cecece solid;">流 程 绘 制</span>
+				<div class="logo">
+					<img src="../images/logo.png" />
+					<span>流 程 绘 制</span>
 				</div>
 				<!-- 右侧头部区域 -->
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item">
 						<a href="javascript: FLOW.save();">
-							<i class="fa fa-check fa-2x iconClass showItemTxt" aria-hidden="true" type="3"><span id="saveStatus" class="layui-badge-dot" style="display: none;"></span></i>
+							<i class="fa fa-check fa-2x iconClass showItemTxt" aria-hidden="true" type="3">
+								<span id="saveStatus" class="layui-badge-dot" style="display: none;"></span>
+							</i>
 							<span hidden="hidden">保存流程</span>
 						</a>
 					</li>
@@ -125,132 +209,125 @@
 				</ul>
 			</div>
 			
-			<hr style="margin-top: 0; margin-bottom: 0; background-color: #979797;" />
-			
-			<div id="toolsModelId" style="width: 250px; height: 850px; position: absolute; background-color: #eeeeee;">
-				<div>
-					<!-- 左侧导航区域 -->
-					<dl class="list_dl" style="z-index: 1; position: absolute; border: 1px #d3d3d3 solid;">
-						<dt class="list_dt">
-				            <span class="_after"></span>
-				            <p>工具</p>
-				            <i class="list_dt_icon"></i>
-        				</dt>
-						<dd class="list_dd">
-							<ul>
-								<li class="list_li">
-									<div id="unableDraggableDiv" align="center" style="padding: 3px;">
-										<i id="mouseToolsBtn" class="fa fa-mouse-pointer fa-2x showItemTxt" aria-hidden="true" type="2"></i>
-										&nbsp;&nbsp;&nbsp;&nbsp;
-										<span class="nodeSpan">鼠标工具</span>
+			<!--页中-->
+			<div class="middle">
+				<!-- 左侧导航区域 -->
+				<div id="toolsBurId">
+					<div class="layui-card" style="margin: 10px; background-color: #F2F2F2;">
+						<div class="layui-card-header">工具箱</div>
+						<div class="layui-card-body" style="height: 35px;">
+							<div id="unableDraggableDiv" align="center">
+								<i id="mouseToolsBtn" class="fa fa-mouse-pointer fa-2x showItemTxt" aria-hidden="true" type="3"></i>
+								<span class="nodeSpan" style="display: none;">鼠标工具</span>
+							</div>
+							<div id="enableDraggableDiv" align="center">
+								<i id="connectionToolsBtn" class="fa fa-exchange fa-2x showItemTxt" aria-hidden="true" type="3"></i>
+								<span class="nodeSpan" style="display: none;">连线工具</span>
+							</div>
+						</div>
+					</div>
+					<div class="layui-collapse" lay-accordion="">
+						<div class="layui-colla-item" style="clear: both;">
+							<h2 class="layui-colla-title">节点</h2>
+							<div class="layui-colla-content layui-show">
+								<div class="controler">
+									<div id="start" class="startNode"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">开始</span>
 									</div>
-								</li>
-								<li class="list_li">
-									<div id="enableDraggableDiv" align="center" style="padding: 3px;">
-										<i id="connectionToolsBtn" class="fa fa-exchange fa-2x showItemTxt" aria-hidden="true" type="2"></i>
-										&nbsp;&nbsp;
-										<span class="nodeSpan">连线工具</span>
+								</div>
+								<div class="controler">
+									<div id="end" class="endNode"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">结束</span>
 									</div>
-								</li>
-							</ul>
-						</dd>
-						<dt class="list_dt">
-				            <span class="_after"></span>
-				            <p>节点</p>
-				            <i class="list_dt_icon"></i>
-        				</dt>
-						<dd class="list_dd">
-							<ul>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="start" href="javascript: void(0);" class="startNode" style="margin-left: 30px; margin-top: 8px; position: static; float: left;">
+								</div>
+								<div class="controler">
+									<div id="gateWay" class="gateWayNode" style="margin-left: 65px; margin-top: 15px;"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">网关</span>
 									</div>
-									<pre style="float: left;">    </pre>
-									<span class="nodeSpan">开始</span>
-								</li>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="end" href="javascript: void(0);" class="endNode" style="margin-left: 30px; margin-top: 8px;">
+								</div>
+								<div class="controler">
+									<div id="event" class="eventNode"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">事件</span>
 									</div>
-									<span class="nodeSpan">结束</span>
-								</li>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="gateWay" href="javascript: void(0);" class="gateWayNode" style="margin-top: 17px; margin-left: 47px; position: static; float: left;">
+								</div>
+								<div class="controler">
+									<div id="comm" class="commNode" style="width: 30px;"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">人工节点</span>
 									</div>
-									<pre style="float: left;"> </pre>
-									<span class="nodeSpan">网关</span>
-								</li>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="event" href="javascript: void(0);" class="eventNode" style="margin-left: 30px; margin-top: 8px;">
+								</div>
+								<div class="controler">
+									<div id="freedom" class="commNode" style="width: 30px;"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">自动节点</span>
 									</div>
-									<span class="nodeSpan">事件</span>
-								</li>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="comm" href="javascript: void(0);" class="commNode" style="width: 30px; height: 20px; margin-left: 30px; margin-top: 13px; position: static; float: left;">
+								</div>
+							</div>
+						</div>
+						<div class="layui-colla-item">
+							<h2 class="layui-colla-title">子流程</h2>
+							<div class="layui-colla-content">
+								<div class="controler">
+									<div id="innerChildFlow" class="innerChildFlowNode" style="width: 30px;"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">内部子流程</span>
 									</div>
-									<pre style="float: left;">    </pre>
-									<span class="nodeSpan">人工活动</span>
-								</li>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="freedom" href="javascript: void(0);" class="commNode" style="width: 30px; height: 20px; margin-left: 30px; margin-top: 13px;">
+								</div>
+								<div class="controler">
+									<div id="outerChildFlow" class="outerChildFlowNode" style="width: 30px;"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">外部子流程</span>
 									</div>
-									<span class="nodeSpan">自由活动</span>
-								</li>
-							</ul>
-						</dd>
-						<dt class="list_dt">
-				            <span class="_after"></span>
-				            <p>子流程</p>
-				            <i class="list_dt_icon"></i>
-        				</dt>
-						<dd class="list_dd">
-							<ul>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="innerChildFlow" href="javascript: void(0);" class="innerChildFlowNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px; position: static; float: left;">
+								</div>
+							</div>
+						</div>
+						<div class="layui-colla-item">
+							<h2 class="layui-colla-title">泳道</h2>
+							<div class="layui-colla-content">
+								<div class="controler">
+									<div id="broadwiseLane" class="broadwiseLaneNode" style="width: 30px; height: 30px;"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">横向泳道</span>
 									</div>
-									<pre style="float: left;">    </pre>
-									<span class="nodeSpan">内部子流程</span>
-								</li>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="outerChildFlow" href="javascript: void(0);" class="outerChildFlowNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px;">
+								</div>
+								<div class="controler">
+									<div id="directionLane" class="directionLaneNode" style="width: 30px; height: 30px;"></div>
+									<div class="descTxt">
+										<span class="nodeSpan">纵向泳道</span>
 									</div>
-									<span class="nodeSpan">外部子流程</span>
-								</li>
-							</ul>
-						</dd>
-						<dt class="list_dt">
-				            <span class="_after"></span>
-				            <p>泳道</p>
-				            <i class="list_dt_icon"></i>
-        				</dt>
-						<dd class="list_dd">
-							<ul>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="broadwiseLane" href="javascript: void(0);" class="broadwiseLaneNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px; position: static; float: left;">
-									</div>
-									<pre style="float: left;">    </pre>
-									<span class="nodeSpan">横向泳道</span>
-								</li>
-								<li class="list_li controler" style="cursor: move;">
-									<div id="directionLane" href="javascript: void(0);" class="directionLaneNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px;">
-									</div>
-									<span class="nodeSpan">纵向泳道</span>
-								</li>
-							</ul>
-						</dd>
-					</dl>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--中间绘制区域-->
+				<div id="canvasId">
+					<div id="Container"></div>
+				</div>
+				<!--右侧属性区域-->
+				<div id="attrPanelId">
+					<div class="layui-tab layui-tab-card">
+						<ul class="layui-tab-title">
+							<li class="layui-this">属性</li>
+							<li>样式</li>
+						</ul>
+						<div class="layui-tab-content" style="height: 100px;">
+							<div class="layui-tab-item layui-show">1</div>
+							<div class="layui-tab-item">2</div>
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<!-- 流程图绘制区域 -->
-			<div id="canvasId" class="layui-body canvasClass" style="top: 60px; left: 250px;">
-				<div id="Container"></div>
-			</div>
 			
-			<!-- 底部固定区域 -->
-			<div class="layui-footer" align="center" style="background-color: #eeeeee;">
+			<!--页脚-->
+			<div class="foot">
 				<p>流程绘制器 V2.0 Powered By ZSFN</p>
 			</div>
 		</div>
-
 	</body>
 	
 	<!-- 注意load.js要放在最后面 -->
@@ -274,23 +351,8 @@
 	<script type="text/javascript" src="../js/main/util/zfsn-util-graph.js"></script>
 	<script type="text/javascript" src="../js/main/util/zfsn-util-idpool.js"></script>
 	<script type="text/javascript" src="../js/main/util/zfsn-util-color.js"></script>
+	
+	<script type="text/javascript" src="../json/demoData.js" ></script>
 	<script type="text/javascript" src="../load.js" ></script>
-
-	<script>
-		/**
-		 * 菜单
-		 */
-		$.each($('dd[class=list_dd]'), function() {
-			$(this).prev().attr("id", "open");
-			$(this).show();
-		});
-		$(".list_dt").on("click", function() {
-			if($(this).attr("id") == "open") {
-				$(this).removeAttr("id").next().hide();
-			} else {
-				$(this).attr("id", "open").next().show();
-			}
-		});
-	</script>
 
 </html>

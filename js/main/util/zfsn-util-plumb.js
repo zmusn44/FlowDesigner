@@ -195,11 +195,14 @@ var plumbUtil = {
 				},
 				// 拖拽过程中实时更新节点位置
 				drag: function(event) {
+					// canvasId的相对位置
+					let canvasX = $('#canvasId').offset().left;
+					let canvasY = $('#canvasId').offset().top;
 					// 当前滚动条位置
 					scrollX = $('#canvasId').scrollLeft();
 					scrollY = $('#canvasId').scrollTop();
 					if (!_base.selectedMultipleFlag) {
-						layer.tips('X: ' + parseInt($('#' + event.el.id).offset().left - 251 + scrollX) + '  Y: ' + parseInt($('#' + event.el.id).offset().top - 61 + scrollY), ZFSN.getJQSel(event.el.id), {
+						layer.tips('X: ' + parseInt($('#' + event.el.id).offset().left - canvasX + scrollX) + '  Y: ' + parseInt($('#' + event.el.id).offset().top - canvasY + scrollY), ZFSN.getJQSel(event.el.id), {
 							tips: [1, '#23262e'],
 							time: 2000
 						});
@@ -398,12 +401,52 @@ var plumbUtil = {
 			_base.plumb.animate(selectedNodeIdArr[i], { top: topCount, left: leftCount }, { duration: CONFIG.alignParam.alignDuration } );
 		}
 	},
+	// 设置节点可以被缩放
+	nodeResizable: function(id) {
+		let _base = FLOW._base;
+		id = ZFSN.getJQSel(id);
+		
+		$(id).resizable({
+			// 设置允许元素调整的最小高度
+			minHeight: 50,
+			// 设置允许元素调整的最小宽度
+			minWidth: 100,
+			// 设置允许元素调整的最大高度
+			//maxHeight: 300,
+			// 设置允许元素调整的最大宽度
+			//maxWidth: 600,
+			// 缩放时保持纵横比
+			//aspectRatio: 1/1,
+			// 缩放时的动画
+			animate: true,
+			//动画效果种类
+			animateEasing: 'easeOutElastic',
+			//动画效果持续时间
+			animateDuration: 500,
+			//缩放时的视觉反馈
+			ghost: true,
+			//默认隐藏掉可调整大小的手柄，除非鼠标移至元素上
+			autoHide: true,
+			//缩放结束后需要重新设置节点文字样式、重绘流程图，这个地方需要用到计时器，等动画结束之后重绘。更新图对象
+			stop: function(event, ui) {
+				var $this = $(this);
+				setTimeout(function() {
+					$this.css('line-height', $this.css('height'));
+					repaintAll();
+					// 更新图对象
+					graphUtil.updateNode($this.attr('id'));
+				}, 510);
+			}
+		});
+		
+		//设置节点可缩放后样式被改成了 relative，这里需要再次设置为 absolute
+		$(id).css('position', 'absolute');
+	},
 	// 设置泳道可被缩放
 	laneResizable: function(id) {
 		let _base = FLOW._base;
-		
 		id = ZFSN.getJQSel(id);
-		//设置节点可缩放
+		
 		$(id).resizable({
 			// 设置允许元素调整的最小高度
 			minHeight: 150,

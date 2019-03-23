@@ -136,7 +136,7 @@ window.FLOW = {
 		plumbUtil.setNodeDraggable(renderNode.key);
 		
 		// 8、设置节点是否可以被缩放
-		if (CONFIG.defaultConfig.resizableFlag) nodeResizable(renderNode.key);
+		if (CONFIG.defaultConfig.resizableFlag) plumbUtil.nodeResizable(renderNode.key);
 		
 		// 9、监听节点
 		FLOW.registerNodeEvent(renderNode.key);
@@ -539,11 +539,11 @@ window.FLOW = {
 		let _base = FLOW._base;
 		let flowDoc = {};
 		let nodeDataArray = [];
-		//当前滚动条位置
+		// 当前滚动条位置
 		let scrollX = $('#canvasId').scrollLeft();
 		let scrollY = $('#canvasId').scrollTop();
 		
-		//节点
+		// 节点
 		$.each($('#Container').children('.moveLight'), function(index) {
 			let tempObj = {};
 			tempObj.text = _base.graph.node($(this).attr('id')).text;
@@ -557,7 +557,7 @@ window.FLOW = {
 			nodeDataArray.push(tempObj);
 		});
 		
-		//泳道
+		// 泳道
 		$.each($('#Container').children('.laneNode'), function(index) {
 			let tempObj = {};
 			tempObj.text = _base.laneObjs[$(this).attr('id')].text;
