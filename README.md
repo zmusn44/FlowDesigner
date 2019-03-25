@@ -12,7 +12,7 @@ GraphlibJS GitHub：https://github.com/dagrejs/graphlib
 
 #### 效果展示
 ● 基本面板
-![基本面板](https://images.gitee.com/uploads/images/2018/1111/144004_83e1e492_2066540.png "基本面板")
+![基本面板](https://images.gitee.com/uploads/images/2019/0325/203444_81ca4c5e_2066540.png "基本面板")
 
 ● 拖拽节点到绘图区连线
 ![拖拽节点到绘图区连线](https://images.gitee.com/uploads/images/2018/1111/144036_4aead914_2066540.gif "拖拽节点到绘图区连线")
