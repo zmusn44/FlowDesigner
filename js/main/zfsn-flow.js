@@ -5,6 +5,7 @@ window.FLOW = {
 	},
 	_data: {},
 	_base: {
+		flowId: '', // 流程ID
 		px: '', // 鼠标在画布中的横向坐标
 		py: '', // 鼠标在画布中的纵向坐标
 		allTimer: {}, // 所有的定时器对象
@@ -109,8 +110,8 @@ window.FLOW = {
 		}
 		
 		// 2、添加节点到画布
-		$("#Container").append('<div id="' + renderNode.key + '" class="' + renderNode.cla + '" ondblclick="editNodeAttribute(\'' + renderNode.key + '\')">' + 
-						   	   	   '<span>' + renderNode.text + '</span>' + 
+		$("#Container").append('<div id="' + renderNode.key + '" class="' + renderNode.cla + '" onClick="attrCfgUtil.setNodeAttr(\'' + renderNode.key + '\')">' + 
+						   	   	   '<span class="nodeTextCla">' + renderNode.text + '</span>' + 
 						   	        renderNode.icon + 
 						   	   '</div>'
 						      );
@@ -178,9 +179,13 @@ window.FLOW = {
 							   '</div>'
 		);
 		
+		// canvasId的相对位置
+		let canvasX = $('#canvasId').offset().left;
+		let canvasY = $('#canvasId').offset().top;
+		
 		// 设置节点位置
-		let t = renderNode.nodeType == 'broadwiseLane' ? renderNode.locTop : 61;
-		let l = renderNode.nodeType == 'broadwiseLane' ? 251 : renderNode.locLeft;
+		let t = renderNode.nodeType == 'broadwiseLane' ? renderNode.locTop : canvasY;
+		let l = renderNode.nodeType == 'broadwiseLane' ? canvasX : renderNode.locLeft;
 		$(ZFSN.getJQSel(renderNode.key)).offset( { top: t, left: l } );
 		
 		// 设置节点的属性
@@ -214,7 +219,15 @@ window.FLOW = {
 		/**
 		 * 阻止事件的传播行为，防止点击节点时触发父节点绑定的click事件，以及在拖动泳道时会出现多选框
 		 */
-		$(ZFSN.getJQSel(c) + ',' + ZFSN.getJQSel(renderNode.key)).click(function(event) {
+		$(ZFSN.getJQSel(c)).click(function(event) {
+			event = document.all ? window.event : arguments[0] ? arguments[0] : event;
+			event.stopPropagation();
+			attrCfgUtil.setLaneAttr(renderNode.key, c);
+		}).mousemove(function(event) {
+			_base.px = '';
+			_base.py = '';
+		});
+		$(ZFSN.getJQSel(renderNode.key)).click(function(event) {
 			event = document.all ? window.event : arguments[0] ? arguments[0] : event;
 			event.stopPropagation();
 		}).mousemove(function(event) {

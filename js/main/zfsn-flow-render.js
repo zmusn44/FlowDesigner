@@ -21,6 +21,10 @@ FLOW.render = function() {
 		
 		// 2.3、选择初始工具：鼠标工具
 		FLOW.mouseTool();
+		
+		// 2.4、随机生成流程id
+		FLOW._base.flowId = ZFSN.getUUID();
+		attrCfgUtil.setCanvasAttr();
 	});
 };
 
@@ -82,6 +86,7 @@ FLOW.registerBaseEvent = function() {
 			// 全选标识改为 false
 			_base.selectedMultipleFlag = false;
 		}
+		attrCfgUtil.setCanvasAttr();
 	}).mousemove(function(event) {
 		// 未按下鼠标时结束方法
 		if (_base.px == '' || _base.py == '') {

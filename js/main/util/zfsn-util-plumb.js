@@ -119,8 +119,10 @@ var plumbUtil = {
 			
 			// 3.3、监听连线
 			window.ContextMenu.bind(selector, connectionMenuJson);
-			$(selector).dblclick(function(event) {
-				alert("双击我做咩野？");
+			$(selector).click(function(event) {
+				event = document.all ? window.event : arguments[0] ? arguments[0] : event;
+				event.stopPropagation();
+				attrCfgUtil.setConnAttr($(selector).attr('sourceId'), $(selector).attr('targetId'));
 			});
 			
 			// 3.4、记录连线id

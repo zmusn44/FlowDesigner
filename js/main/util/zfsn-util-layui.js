@@ -146,7 +146,7 @@ var layuiUtil = {
 		});
 	},
 	// 编辑连线属性
-	connectionAttr: function(connId) {
+	/*connectionAttr: function(connId) {
 		layuiUtil.tempId = connId;
 		
 		layer.open({
@@ -159,9 +159,9 @@ var layuiUtil = {
 			closeBtn: 2,
 			content: ['EditRouterAttribute.html']
 		});
-	},
+	},*/
 	// 编辑节点属性
-	editNodeAttribute: function(tempId) {
+	/*editNodeAttribute: function(tempId) {
 		layuiUtil.tempId = tempId;
 		
 		layer.open({
@@ -174,7 +174,7 @@ var layuiUtil = {
 			closeBtn: 2,
 			content: ['EditNodeAttribute.html']
 		});
-	},
+	},*/
 	// 设置节点样式
 	setNodeStyle: function(tempId) {
 		layuiUtil.tempId = tempId;
@@ -195,7 +195,7 @@ var layuiUtil = {
 		});
 	},
 	// 编辑泳道属性
-	laneAttr: function(tempId) {
+	/*laneAttr: function(tempId) {
 		layuiUtil.tempId = tempId;
 		
 		layer.open({
@@ -208,7 +208,7 @@ var layuiUtil = {
 			closeBtn: 2,
 			content: ['EditLaneAttribute.html']
 		});
-	},
+	},*/
 	// 测试窗口
 	test: function() {
 		let pwd = prompt('请输入密码：');

@@ -40,6 +40,7 @@ body {
 	background: -ms-linear-gradient(rgba(120, 220, 107, 0.9), rgba(120, 220, 107, 0.9));
 	/* 层叠顺序 */
 	z-index: 26;
+	display: table;
 }
 
 /**
@@ -72,6 +73,7 @@ body {
 	background: -ms-linear-gradient(rgba(220, 107, 107, 0.9), rgba(220, 107, 107, 0.9));
 	/* 层叠顺序 */
 	z-index: 26;
+	display: table;
 }
 
 /**
@@ -104,6 +106,7 @@ body {
 	background: -ms-linear-gradient(rgba(107, 171, 220, 0.9), rgba(107, 171, 220, 0.9));
 	/* 层叠顺序 */
 	z-index: 26;
+	display: table;
 }
 
 /**
@@ -136,6 +139,7 @@ body {
 	background: -ms-linear-gradient(rgba(107, 171, 220, 0.9), rgba(107, 171, 220, 0.9));
 	/* 层叠顺序 */
 	z-index: 26;
+	display: table;
 }
 
 /**
@@ -219,6 +223,7 @@ body {
 	background: -ms-linear-gradient(rgba(237, 239, 49, 0.9), rgba(237, 239, 49, 0.9));
 	/* 层叠顺序 */
 	z-index: 26;
+	display: table;
 }
 
 /**
@@ -251,6 +256,7 @@ body {
 	background: -ms-linear-gradient(rgba(237, 239, 49, 0.9), rgba(237, 239, 49, 0.9));
 	/* 层叠顺序 */
 	z-index: 26;
+	display: table;
 }
 
 /**
@@ -288,11 +294,9 @@ body {
  */
 .broadwiseLaneNodeOnContainer {
 	/* 边框 */
-	border: 2px solid #000000;
+	border: 1px solid #000000;
 	/* 圆角 */
 	border-radius: 5px;
-	/* 泛光 */
-	box-shadow: 0 0 15px #4E4E4E;
 	/* 高度 */
 	height: 250px;
 	/* 宽度 */
@@ -342,11 +346,9 @@ body {
  */
 .directionLaneNodeOnContainer {
 	/* 边框 */
-	border: 2px solid #000000;
+	border: 1px solid #000000;
 	/* 圆角 */
 	border-radius: 5px;
-	/* 泛光 */
-	box-shadow: 0 0 15px #4E4E4E;
 	/* 高度 */
 	height: 750px;
 	/* 宽度 */

@@ -127,6 +127,12 @@
 			.controler .descTxt {
 				padding: 15px;
 			}
+			
+			.nodeTextCla {
+				display: table-cell;
+				vertical-align: middle;
+				line-height: 20px;
+			}
 		</style>
 
 	</head>
@@ -316,8 +322,12 @@
 							<li>样式</li>
 						</ul>
 						<div class="layui-tab-content" style="height: 100px;">
-							<div class="layui-tab-item layui-show">1</div>
-							<div class="layui-tab-item">2</div>
+							<div class="layui-tab-item layui-show">
+								<form id="attrForm" class="layui-form"></form>
+							</div>
+							<div class="layui-tab-item">
+								<form id="cssForm" class="layui-form"></form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -331,8 +341,10 @@
 	</body>
 	
 	<!-- 注意load.js要放在最后面 -->
+	<script type="text/javascript" src="../js/component/sugar.min.js"></script>
 	<script type="text/javascript" src="../js/component/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="../js/component/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/component/jquerymy-1.2.14.min.js"></script>
 	<script type="text/javascript" src="../js/component/jsplumb.min.js"></script>
 	<script type="text/javascript" src="../plugings/layui/layui.all.js"></script>
 	<script type="text/javascript" src="../js/component/web.contextmenu.js"></script>
@@ -351,8 +363,9 @@
 	<script type="text/javascript" src="../js/main/util/zfsn-util-graph.js"></script>
 	<script type="text/javascript" src="../js/main/util/zfsn-util-idpool.js"></script>
 	<script type="text/javascript" src="../js/main/util/zfsn-util-color.js"></script>
+	<script type="text/javascript" src="../js/main/util/zfsn-util-attr-cfg.js"></script>
 	
 	<script type="text/javascript" src="../json/demoData.js" ></script>
 	<script type="text/javascript" src="../load.js" ></script>
-
+	
 </html>

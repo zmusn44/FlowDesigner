@@ -1,12 +1,12 @@
 // 节点右击菜单
 var nodeMenuJson = [
-	{
+	/*{
 		name: "节点属性",
 		id: "nodeAttr",
 		callback: function(tempId) {
 			layuiUtil.editNodeAttribute(tempId);
 		}
-	},
+	},*/
 	{
 		name: "复制节点",
 		id: "copyNode",
@@ -46,14 +46,14 @@ var nodeMenuJson = [
 
 // 连接线右击菜单
 var connectionMenuJson = [
-	{
+	/*{
 		name: "连线属性",
 		id: "connectionAttr",
 		callback: function(tempId) {
 			// 编辑路由属性
 			layuiUtil.connectionAttr(tempId);
 		}
-	},
+	},*/
 	{
 		name: "删除连线",
 		id: "deleteConnection",
@@ -65,14 +65,14 @@ var connectionMenuJson = [
 
 //泳道右击菜单
 var laneMenuJson = [
-	{
+	/*{
 		name: "属性编辑",
 		id: "laneAttr",
 		callback: function(tempId) {
 			// 编辑泳道属性
 			layuiUtil.laneAttr(tempId);
 		}
-	},
+	},*/
 	{
 		name: "删除泳道",
 		id: "deleteLane",
@@ -85,11 +85,10 @@ var laneMenuJson = [
 // 画布右击菜单
 var canvasMenuJson = [
 	{
-		name: "流程图属性",
-		id: "processAttribute",
+		name: "流程图信息",
+		id: "flowChartInfo",
 		callback: function(tempId) {
-			//编辑过程属性
-			alert('编辑流程图属性');
+			alert("预留功能。。。。。");
 		}
 	},
 	{
@@ -120,13 +119,6 @@ var canvasMenuJson = [
 	{
 		name: "对齐方式",
 		id: "alignWay"
-	},
-	{
-		name: "流程图信息",
-		id: "flowChartInfo",
-		callback: function(tempId) {
-			alert("预留功能。。。。。");
-		}
 	},
 	
 	//快捷工具子菜单
@@ -234,17 +226,6 @@ var canvasMenuJson = [
 					graphUtil.updateAllNode();
 				}, CONFIG.alignParam.alignDuration + 100);
 			}
-		}
-	}
-];
-
-// 查看流程图画布右击菜单
-var showFlowMenuJson = [
-	{
-		name: "背景切换",
-		id: "bgToggle",
-		callback: function() {
-			console.log('bgToggle...');
 		}
 	}
 ];
