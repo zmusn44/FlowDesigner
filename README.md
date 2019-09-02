@@ -57,4 +57,4 @@ GraphlibJS GitHub：https://github.com/dagrejs/graphlib
 ![保存流程图](https://images.gitee.com/uploads/images/2018/1111/144414_a6567dc2_2066540.gif "保存流程图")
 
 #### 交流群
-![交流群](https://images.gitee.com/uploads/images/2019/0902/101150_05b5bb00_2066540.jpeg "000001.jpg")
+![交流群](https://images.gitee.com/uploads/images/2019/0902/104307_57ddd34d_2066540.jpeg "000001.jpg")
