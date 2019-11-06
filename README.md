@@ -55,3 +55,6 @@ GraphlibJS GitHub：https://github.com/dagrejs/graphlib
 
 ● 保存流程图(会生成一段json数据，后台可以保存这段数据，为了便于调试，生成的json数据可以通过快捷键Ctrl+L打开的测试窗口看到。同时也可以从该窗口载入其他的符合流程图的json数据)
 ![保存流程图](https://images.gitee.com/uploads/images/2018/1111/144414_a6567dc2_2066540.gif "保存流程图")
+
+
+QQ交流群：637230519
