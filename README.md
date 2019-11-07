@@ -57,4 +57,8 @@ GraphlibJS GitHub：https://github.com/dagrejs/graphlib
 ![保存流程图](https://images.gitee.com/uploads/images/2018/1111/144414_a6567dc2_2066540.gif "保存流程图")
 
 
-QQ交流群：637230519
+联科流程应用开发平台交流
+QQ 群 （入群请 备注 下载渠道，需等待管理员审核）
+OpenEA开源技术交流02：748293464 
+OpenEA开源技术交流03：191456154 
+OpenEA开源技术交流04：716078623
