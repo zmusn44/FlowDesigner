@@ -1,5 +1,7 @@
 # 基于JsPlumb的流程设计器FlowDesigner
 
+# 原master分支改名为[feature-ES6分支](https://gitee.com/openEA/FlowDesigner/edit/feature-ES6) 
+
 #### 项目介绍
 ​FlowDesigner来源于Linkey BPM中的流程设计器，作用于流程运行过程中的图形描述。它的操作简捷轻巧，能快速绘制出流程图。组件单独也可以使用，并能嵌入到任何需要该组件的系统中。
 
