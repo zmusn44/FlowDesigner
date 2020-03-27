@@ -1,6 +1,6 @@
 window.FLOW = {
 	_info: {
-		author: 'ZFSN',
+		author: 'openEA',
 		version: '2.0'
 	},
 	_data: {},
@@ -39,7 +39,7 @@ window.FLOW = {
 			'成功初始化流程设计器!', 
 			'当前版本：' + _info.version,
 			'Powered by ' + _info.author,
-			'码云：https://gitee.com/yjblogs/FlowDesigner'
+			'码云：http://git.openea.net/component-element/component-element-FlowDesigner'
 		]);
 	},
 	// 加载json数据到流程设计器
