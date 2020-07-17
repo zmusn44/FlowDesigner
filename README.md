@@ -3,7 +3,7 @@
 # 原master分支改名为[feature-ES6分支](https://gitee.com/openEA/FlowDesigner/edit/feature-ES6) 
 
 #### 项目介绍
-​FlowDesigner来源于Linkey BPM中的流程设计器，作用于流程运行过程中的图形描述。它的操作简捷轻巧，能快速绘制出流程图。组件单独也可以使用，并能嵌入到任何需要该组件的系统中。
+FlowDesigner来源于Linkey BPM中的流程设计器，作用于流程运行过程中的图形描述。它的操作简捷轻巧，能快速绘制出流程图。组件单独也可以使用，并能嵌入到任何需要该组件的系统中。
 
 #### 技术选型
 为什么选用JsPlumb呢？在项目开始之前我对各类技术进行了调研，主要看了一下jsplumb、joint、Raphael、GoJS、dagre-d3这几个，最后我选择了JsPlumb，因为它开源，使用起来也比较方便，文档也是比较齐全的。d3也非常强大，但是学习成本太高。
@@ -60,7 +60,5 @@ GraphlibJS GitHub：https://github.com/dagrejs/graphlib
 
 
 联科流程应用开发平台交流
-QQ 群 （入群请 备注 下载渠道，需等待管理员审核）
-OpenEA开源技术交流02：748293464 
-OpenEA开源技术交流03：191456154 
-OpenEA开源技术交流04：716078623
+QQ 群 （入群请 备注 下载渠道，需等待管理员审核）<br>
+OpenEA开源技术交流02：748293464 （推荐）
