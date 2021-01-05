@@ -2,7 +2,10 @@
 
 # 原master分支改名为[feature-ES6分支](https://gitee.com/openEA/FlowDesigner/edit/feature-ES6) 
 
+
+
 #### 项目介绍
+
 FlowDesigner来源于Linkey BPM中的流程设计器，作用于流程运行过程中的图形描述。它的操作简捷轻巧，能快速绘制出流程图。组件单独也可以使用，并能嵌入到任何需要该组件的系统中。
 
 #### 技术选型
@@ -11,6 +14,18 @@ FlowDesigner来源于Linkey BPM中的流程设计器，作用于流程运行过�
 JsPlumb官网：https://jsplumbtoolkit.com
 JsPlumb GitHub：https://github.com/sporritt/jsplumb/
 GraphlibJS GitHub：https://github.com/dagrejs/graphlib
+
+
+
+#### 相关项目
+
+[osflow-engine](https://gitee.com/openEA/osflow-engine)：独立的流程引擎jar；
+
+[osflow-designer](https://gitee.com/openEA/osflow-designer)：流程定义工具，是**FlowDesigner**含后台表数据的升级版本；
+
+[osflow-server](https://gitee.com/openEA/osflow-server)：基于SpringBoot的流程微服务项目
+
+
 
 #### 效果展示
 ● 基本面板
